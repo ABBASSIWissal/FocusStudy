@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon App d'Études & Concentration</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6C5CE7">
+</head>
+<body class="theme-dopamine">
+
+    <!-- En-tête avec navigation par onglets -->
+    <header>
+        <div class="header-container">
+            <h1 class="logo">⚡ FocusStudy</h1>
+            <nav class="main-nav">
+                <button class="nav-btn active" data-tab="tab-modules">📖 Modules</button>
+                <button class="nav-btn" data-tab="tab-pomodoro">⏱️ Pomodoro</button>
+                <button class="nav-btn" data-tab="tab-planning">📅 Routines & Planning</button>
+                <button class="nav-btn" data-tab="tab-recommendations">🧠 Recommandations</button>
+                <button class="nav-btn" data-tab="tab-themes">🎨 Thèmes</button>
+                <button class="nav-btn" data-tab="tab-config">⚙️ Configuration</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+
+        <!-- ONGLET 1 : MODULES -->
+        <section id="tab-modules" class="tab-pane active">
+            <div class="section-header">
+                <h2>📖 Mes Modules d'Études</h2>
+                <button class="btn-primary" onclick="openAddModuleModal()">➕ Nouveau Module</button>
+            </div>
+
+            <!-- Défilement horizontal des cartes de modules -->
+            <div class="modules-horizontal-scroll" id="modules-horizontal-list">
+                <!-- Les cartes de modules s'afficheront ici dynamiquement -->
+            </div>
+
+            <!-- Zone de détails du module sélectionné -->
+            <div id="module-detail-container" class="card detail-card hidden">
+                <!-- Détails complets du module sélectionné -->
+            </div>
+        </section>
+
+        <!-- ONGLET 2 : POMODORO -->
+        <section id="tab-pomodoro" class="tab-pane">
+            <div class="card pomodoro-card">
+                <h2>⏱️ Espace Minuteur Pomodoro</h2>
+                
+                <div class="pomodoro-module-selector">
+                    <label for="pomo-module-select">Attribuer la session au module :</label>
+                    <select id="pomo-module-select">
+                        <option value="">-- Session libre / Aucun module --</option>
+                    </select>
+                </div>
+
+                <div class="timer-display-box">
+                    <div id="timer-status" class="timer-status">Session de Travail</div>
+                    <div id="timer-time" class="timer-clock">25:00</div>
+                    <div id="timer-cycles" class="timer-cycles">Cycle 1 sur 4</div>
+                </div>
+
+                <div class="pomodoro-controls-btns">
+                    <button id="btn-pomo-start" class="btn-success btn-lg">Démarrer</button>
+                    <button id="btn-pomo-pause" class="btn-warning btn-lg">Pause</button>
+                    <button id="btn-pomo-reset" class="btn-danger btn-lg">Réinitialiser</button>
+                </div>
+
+                <!-- Configuration du système Pomodoro -->
+                <div class="pomodoro-config-box">
+                    <h3>⚙️ Votre Système Pomodoro Personnalisé</h3>
+                    <div class="form-grid-4">
+                        <div class="input-group">
+                            <label for="cfg-pomo-work">Étude (min) :</label>
+                            <input type="number" id="cfg-pomo-work" value="25" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="cfg-pomo-short">Pause courte (min) :</label>
+                            <input type="number" id="cfg-pomo-short" value="5" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="cfg-pomo-long">Pause longue (min) :</label>
+                            <input type="number" id="cfg-pomo-long" value="15" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="cfg-pomo-cycles">Cycles / Pause longue :</label>
+                            <input type="number" id="cfg-pomo-cycles" value="4" min="1">
+                        </div>
+                    </div>
+                    <button class="btn-secondary" onclick="applyPomodoroConfig()">Appliquer la configuration</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ONGLET 3 : PLANNING & ROUTINES FIXES -->
+        <section id="tab-planning" class="tab-pane">
+            <div class="grid-2">
+                <div class="card">
+                    <h2>📅 Ajouter une Routine Fixe (Gym, Université...)</h2>
+                    <form id="form-add-routine">
+                        <div class="input-group">
+                            <label for="routine-title">Titre de l'activité :</label>
+                            <input type="text" id="routine-title" placeholder="Ex: Université, Gym, Repas..." required>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="routine-day">Jour de la semaine :</label>
+                                <select id="routine-day">
+                                    <option value="Lundi">Lundi</option>
+                                    <option value="Mardi">Mardi</option>
+                                    <option value="Mercredi">Mercredi</option>
+                                    <option value="Jeudi">Jeudi</option>
+                                    <option value="Vendredi">Vendredi</option>
+                                    <option value="Samedi">Samedi</option>
+                                    <option value="Dimanche">Dimanche</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="routine-start">Heure Début :</label>
+                                <input type="time" id="routine-start" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="routine-end">Heure Fin :</label>
+                                <input type="time" id="routine-end" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary">Ajouter la routine</button>
+                    </form>
+
+                    <h3 class="mt-20">Mes Activités Routinières</h3>
+                    <div id="routines-list" class="routines-list"></div>
+                </div>
+
+                <div class="card highlight-card">
+                    <h2>🎯 Analyseur de Créneaux Libres</h2>
+                    <p>Découvrez quoi réviser aujourd'hui entre vos heures fixes !</p>
+                    <div class="input-group">
+                        <label for="analyzer-day">Choisir le jour à analyser :</label>
+                        <select id="analyzer-day" onchange="analyzeFreeGaps()">
+                            <option value="Lundi">Lundi</option>
+                            <option value="Mardi">Mardi</option>
+                            <option value="Mercredi">Mercredi</option>
+                            <option value="Jeudi">Jeudi</option>
+                            <option value="Vendredi">Vendredi</option>
+                            <option value="Samedi">Samedi</option>
+                            <option value="Dimanche">Dimanche</option>
+                        </select>
+                    </div>
+                    <div id="analyzer-results" class="analyzer-box">
+                        <!-- Résultat de l'analyse des créneaux libres -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ONGLET 4 : RECOMMANDATIONS & BANQUE DE TÂCHES -->
+        <section id="tab-recommendations" class="tab-pane">
+            <div class="grid-2">
+                <div class="card">
+                    <h2>🧠 Quel est votre état actuel ?</h2>
+                    <div class="input-group">
+                        <label for="rec-energy">Niveau de fatigue / Énergie :</label>
+                        <select id="rec-energy">
+                            <option value="low">😴 Fatigué(e) / Énergie Faible</option>
+                            <option value="medium">😐 Forme Moyenne</option>
+                            <option value="high">🔥 Motivé(e) / Énergie Élevée</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="rec-time">Temps disponible (minutes) :</label>
+                        <input type="number" id="rec-time" value="30" min="5">
+                    </div>
+                    <button class="btn-primary btn-lg" onclick="calculateUltimateTask()">🚀 Obtenir l'Option Ultime</button>
+
+                    <div id="ultimate-task-result" class="ultimate-result-box hidden">
+                        <!-- Résultat proposé -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>📝 Banque de Tâches Personnalisées</h2>
+                    <p>Enregistrez vos propres idées de tâches selon votre niveau d'énergie :</p>
+                    <form id="form-add-task">
+                        <div class="input-group">
+                            <label for="task-name">Nom de la tâche :</label>
+                            <input type="text" id="task-name" placeholder="Ex: Écouter résumé audio, Relire fiches..." required>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="task-energy">Énergie requise :</label>
+                                <select id="task-energy">
+                                    <option value="low">Faible 😴</option>
+                                    <option value="medium">Moyenne 😐</option>
+                                    <option value="high">Élevée 🔥</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="task-duration">Durée estimée (min) :</label>
+                                <input type="number" id="task-duration" value="20" min="5">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-secondary">Ajouter à la banque</button>
+                    </form>
+
+                    <h3 class="mt-20">Tâches Enregistrées</h3>
+                    <div id="custom-tasks-list" class="tasks-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ONGLET 5 : THÈMES STIMULANTS -->
+        <section id="tab-themes" class="tab-pane">
+            <div class="card">
+                <h2>🎨 Choisir un Thème de Couleurs Stimulant</h2>
+                <p>Sélectionnez une palette psychologiquement adaptée pour éveiller la motivation et combattre la procrastination :</p>
+                
+                <div class="themes-grid">
+                    <div class="theme-card" onclick="setTheme('dopamine')">
+                        <div class="theme-preview theme-dopamine-preview"></div>
+                        <h3>⚡ Dopamine Energy</h3>
+                        <p>Violet Électrique & Ambre. Éveille l'action et stimule la motivation immédiate.</p>
+                    </div>
+
+                    <div class="theme-card" onclick="setTheme('matcha')">
+                        <div class="theme-preview theme-matcha-preview"></div>
+                        <h3>🍵 Matcha Deep Focus</h3>
+                        <p>Vert Sauge & Thé Vert. Apaise l'anxiété et favorise un état de concentration profonde.</p>
+                    </div>
+
+                    <div class="theme-card" onclick="setTheme('cappuccino')">
+                        <div class="theme-preview theme-cappuccino-preview"></div>
+                        <h3>☕ Cappuccino Dark Academia</h3>
+                        <p>Chocolat chaud & Marron Glacé. Ambiance bibliothèque d'université chaleureuse.</p>
+                    </div>
+
+                    <div class="theme-card" onclick="setTheme('neon')">
+                        <div class="theme-preview theme-neon-preview"></div>
+                        <h3>🌌 Neon Cyber Focus</h3>
+                        <p>Bleu Néon & Cyan. Style immersif parfait pour les sessions nocturnes intenses.</p>
+                    </div>
+
+                    <div class="theme-card" onclick="setTheme('citrus')">
+                        <div class="theme-preview theme-citrus-preview"></div>
+                        <h3>🍋 Citrus Refresh</h3>
+                        <p>Citron & Menthe Fraîche. Rafraîchit l'esprit et dissipe le brouillard mental.</p>
+                    </div>
+
+                    <div class="theme-card" onclick="setTheme('sakura')">
+                        <div class="theme-preview theme-sakura-preview"></div>
+                        <h3>🌸 Sakura Aesthetic</h3>
+                        <p>Rose Pastel & Douceur. Environnement de travail zen et harmonieux.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ONGLET 6 : CONFIGURATION & SYNCHRONISATION -->
+        <section id="tab-config" class="tab-pane">
+            <div class="grid-2">
+                <div class="card">
+                    <h2>⚙️ Synchronisation GitHub</h2>
+                    <p>Connectez votre dépôt privé pour synchroniser vos 3 appareils :</p>
+                    <form id="form-github-sync">
+                        <div class="input-group">
+                            <label for="gh-token">GitHub Personal Access Token :</label>
+                            <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx">
+                        </div>
+                        <div class="input-group">
+                            <label for="gh-repo">Dépôt GitHub (ex: votre-pseudo/mon-depot) :</label>
+                            <input type="text" id="gh-repo" placeholder="utilisateur/depot-etudes">
+                        </div>
+                        <div class="btn-group">
+                            <button type="submit" class="btn-primary">Enregistrer Identifiants</button>
+                            <button type="button" class="btn-success" onclick="pullFromGitHub()">📥 Récupérer de GitHub</button>
+                            <button type="button" class="btn-warning" onclick="pushToGitHub()">📤 Envoyer sur GitHub</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2>💾 Sauvegarde & Restauration Locale</h2>
+                    <p>Exporter ou importer vos données au format fichier JSON :</p>
+                    <div class="btn-group-column">
+                        <button class="btn-secondary" onclick="exportDataJSON()">📥 Exporter mes données (.json)</button>
+                        <label class="btn-outline">
+                            📤 Importer un fichier (.json)
+                            <input type="file" id="import-json-file" accept=".json" onchange="importDataJSON(event)" style="display: none;">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Ajouter Module -->
+    <div id="modal-add-module" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAddModuleModal()">&times;</span>
+            <h2>➕ Créer un Nouveau Module</h2>
+            <form id="form-create-module">
+                <div class="input-group">
+                    <label for="new-mod-name">Nom du module :</label>
+                    <input type="text" id="new-mod-name" placeholder="Ex: Mathématiques, Biologie..." required>
+                </div>
+                <div class="input-group">
+                    <label for="new-mod-color">Couleur du module :</label>
+                    <input type="color" id="new-mod-color" value="#6C5CE7">
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="new-mod-td">Nombre de T.D :</label>
+                        <input type="number" id="new-mod-td" value="0" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="new-mod-tp">Nombre de T.P :</label>
+                        <input type="number" id="new-mod-tp" value="0" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="new-mod-chap">Nombre de Chapitres :</label>
+                        <input type="number" id="new-mod-chap" value="1" min="1">
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Créer le Module</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Éditer Module -->
+    <div id="modal-edit-module" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeEditModuleModal()">&times;</span>
+            <h2>✏️ Modifier le Module</h2>
+            <form id="form-edit-module">
+                <input type="hidden" id="edit-mod-id">
+                <div class="input-group">
+                    <label for="edit-mod-name">Nom du module :</label>
+                    <input type="text" id="edit-mod-name" required>
+                </div>
+                <div class="input-group">
+                    <label for="edit-mod-color">Couleur :</label>
+                    <input type="color" id="edit-mod-color">
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="edit-mod-td">Nombre de T.D :</label>
+                        <input type="number" id="edit-mod-td" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="edit-mod-tp">Nombre de T.P :</label>
+                        <input type="number" id="edit-mod-tp" min="0">
+                    </div>
+                </div>
+                <button type="submit" class="btn-success">Enregistrer les Modifications</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
