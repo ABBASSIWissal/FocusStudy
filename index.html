@@ -4,14 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FocusStudy & Concentration</title>
-    <!-- Web App Manifest (Data URI for single file PWA compliance) -->
-    <link rel="manifest" href="data:application/manifest+json;utf8,%7B%22name%22%3A%22FocusStudy%20App%22%2C%22short_name%22%3A%22FocusStudy%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23EAE6F7%22%2C%22theme_color%22%3A%22%238C7CE6%22%7D">
-    <meta name="theme-color" content="#B8A7EA">
-
     <style>
-        /* -------------------------------------------------------------
-           16 PALETTES DE COULEURS PASTELS DOUCES AVEC FOND TEINTÉ
-           ------------------------------------------------------------- */
+        /* PALETTES DE COULEURS PASTELS DOUCES ET ASSORTIES SUR ARRIÈRE-PLAN TEINTÉ */
         body.theme-dopamine-pastel { --primary: #8C7CE6; --accent: #FFB7B2; --bg: #EAE6F7; --card-bg: #FFFFFF; --text: #2D3436; --border: #D8D0F2; --header-bg: linear-gradient(135deg, #B8A7EA, #FFC6FF); }
         body.theme-matcha-douceur { --primary: #52B788; --accent: #E9D8A6; --bg: #E4F2E8; --card-bg: #FFFFFF; --text: #1E272E; --border: #C1E2CE; --header-bg: linear-gradient(135deg, #A8E6CF, #DCEDC1); }
         body.theme-cappuccino-creme { --primary: #A1887F; --accent: #D7CCC8; --bg: #EFE8E3; --card-bg: #FFFFFF; --text: #3E2723; --border: #E0D5D0; --header-bg: linear-gradient(135deg, #D7CCC8, #F5EBE0); }
@@ -29,71 +23,60 @@
         body.theme-vanille-etoilee { --primary: #F6B93B; --accent: #F7D794; --bg: #FDF6E3; --card-bg: #FFFFFF; --text: #594711; --border: #F5E5B8; --header-bg: linear-gradient(135deg, #F6B93B, #FFF1C5); }
         body.theme-glycine-pastel { --primary: #AB47BC; --accent: #E8A7A1; --bg: #F6E6F7; --card-bg: #FFFFFF; --text: #4A148C; --border: #E4C5EB; --header-bg: linear-gradient(135deg, #E8A7A1, #D980FA); }
 
-        /* -------------------------------------------------------------
-           STYLES GÉNÉRAUX & STYLISATIONS DES CARTE
-           ------------------------------------------------------------- */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-        body { background: var(--bg); color: var(--text); padding-bottom: 50px; transition: background 0.3s ease, color 0.3s ease; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background: var(--bg); color: var(--text); padding-bottom: 50px; transition: background 0.3s ease; }
 
         header { background: var(--header-bg); color: #2D3436; padding: 1rem 1.5rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
         .header-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .logo { font-size: 1.5rem; font-weight: 800; color: var(--text); }
         .main-nav { display: flex; gap: 8px; flex-wrap: wrap; }
-        .nav-btn { background: rgba(255,255,255,0.55); border: none; color: var(--text); padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: background 0.2s, transform 0.1s; }
-        .nav-btn:hover { background: rgba(255,255,255,0.85); }
-        .nav-btn.active { background: white; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+        .nav-btn { background: rgba(255,255,255,0.8); border: none; color: var(--text); padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.2s; }
+        .nav-btn.active { background: white; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.12); transform: translateY(-1px); }
 
         .main-content { max-width: 1200px; margin: 25px auto; padding: 0 15px; }
         .tab-pane { display: none; }
-        .tab-pane.active { display: block; animation: fadeIn 0.25s ease-in-out; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); margin-bottom: 20px; transition: border-color 0.3s ease; }
+        .tab-pane.active { display: block; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); margin-bottom: 20px; }
         .section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
         .max-w-700 { max-width: 700px; margin: 0 auto; }
 
-        /* MODULES HORIZONTAUX ET CARTES DÉTAILS */
-        .modules-horizontal-scroll { display: flex; gap: 15px; overflow-x: auto; padding: 10px 5px 20px 5px; scrollbar-width: thin; }
-        .module-card-mini { min-width: 250px; background: var(--card-bg); border: 2.5px solid var(--border); border-radius: 14px; padding: 16px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; flex-shrink: 0; }
+        /* MODULES HORIZONTAUX */
+        .modules-horizontal-scroll { display: flex; gap: 15px; overflow-x: auto; padding: 10px 5px 20px 5px; }
+        .module-card-mini { min-width: 240px; background: var(--card-bg); border: 2px solid var(--border); border-radius: 14px; padding: 16px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; flex-shrink: 0; }
         .module-card-mini:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
-        .module-card-mini.active-selected { border-width: 3.5px; box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+        .module-card-mini.active-selected { border-width: 3px; }
 
         .mod-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .mod-title { font-size: 1.1rem; font-weight: 800; color: var(--text); }
         .mod-pomo-time { font-size: 0.85rem; font-weight: 700; background: var(--bg); padding: 4px 8px; border-radius: 8px; color: var(--text); }
 
         .progress-bar { background: var(--border); height: 10px; border-radius: 10px; overflow: hidden; margin: 10px 0; }
-        .progress-fill { background: #52B788; height: 100%; width: 0%; transition: width 0.4s ease; }
+        .progress-fill { background: #52B788; height: 100%; width: 0%; transition: width 0.4s; }
 
         /* DÉTAIL MODULE */
-        .detail-card { border-left: 8px solid var(--primary); margin-top: 15px; }
+        .detail-card { border-left: 8px solid var(--primary); animation: fadeIn 0.3s; margin-top: 15px; }
         .chapter-box { background: #FFFFFF; border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
         .step-item { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-size: 0.95rem; color: #2D3436; font-weight: 600; }
         .step-item.disabled { opacity: 0.45; cursor: not-allowed; }
 
-        /* RECOMMANDATIONS ET TÂCHES PERSO (Harmonisation avec le thème) */
+        /* RECOMMANDATIONS ET TÂCHES PERSO */
         .recommendation-card { border-top: 6px solid var(--primary); }
-        .ultimate-result-box { background: var(--bg); border: 2px dashed var(--primary); padding: 20px; border-radius: 14px; margin-top: 20px; font-weight: 700; color: var(--text); }
+        .ultimate-result-box { background: var(--bg); border: 2px dashed var(--primary); padding: 20px; border-radius: 14px; margin-top: 20px; font-weight: 700; }
 
         .pinterest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
         .pinterest-card { background: var(--card-bg); border: 1px solid var(--border); border-top: 5px solid var(--primary); border-radius: 16px; padding: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: transform 0.2s; position: relative; }
         .pinterest-card:hover { transform: translateY(-4px); }
         .pinterest-card-tag { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; padding: 4px 10px; border-radius: 12px; background: var(--bg); color: var(--primary); display: inline-block; margin-bottom: 10px; }
 
-        /* BANQUE D'ACTIVITÉS */
+        /* BANQUE D'ACTIVITÉS ET SWATCHES PASTELS */
         .bank-list { max-height: 220px; overflow-y: auto; }
         .bank-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: 10px; margin-bottom: 8px; border: 1px solid var(--border); font-weight: 700; }
 
-        /* SWATCHES PASTELS */
         .pastel-swatches-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
         .pastel-swatch-btn { width: 32px; height: 32px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.15s; }
         .pastel-swatch-btn:hover, .pastel-swatch-btn.selected { transform: scale(1.2); border-color: #2D3436; }
 
-        /* PLANNING HEBDO GRID TABLE */
+        /* PLANNING HEBDO GRID TABLEAU */
         .schedule-assign-bar { background: var(--bg); padding: 18px; border-radius: 14px; border: 1px solid var(--border); }
         .timetable-scroll-box { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
         .timetable-grid { width: 100%; border-collapse: collapse; min-width: 850px; background: white; }
@@ -101,18 +84,16 @@
         .timetable-grid td { border: 1px solid var(--border); height: 55px; vertical-align: middle; text-align: center; font-size: 0.85rem; padding: 4px; position: relative; }
         .time-slot-label { font-weight: 800; color: var(--text); background: var(--bg); width: 110px; }
         .cell-slot { cursor: pointer; transition: background 0.15s; }
-        .cell-slot:hover { background: rgba(0,0,0,0.04); }
+        .cell-slot:hover { background: rgba(0,0,0,0.03); }
         .slot-badge { padding: 8px 10px; border-radius: 10px; font-weight: 700; color: #2D3436; font-size: 0.85rem; display: block; box-shadow: 0 2px 6px rgba(0,0,0,0.06); text-align: center; word-break: break-word; }
 
         /* POMODORO */
         .pomodoro-card { text-align: center; }
         .pomodoro-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .timer-display-box { background: var(--bg); border-radius: 20px; padding: 25px; margin: 20px 0; border: 2px dashed var(--border); }
-        .timer-status { font-weight: 800; font-size: 1.1rem; color: var(--text); }
         .timer-clock { font-size: 4.5rem; font-weight: 900; color: var(--primary); margin: 10px 0; }
-        .timer-cycles { font-weight: 700; font-size: 0.95rem; color: var(--text); opacity: 0.8; }
         .pomodoro-controls-btns { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; }
-        .bilan-summary-box { background: var(--bg); padding: 15px; border-radius: 12px; font-weight: 700; text-align: center; color: var(--text); }
+        .bilan-summary-box { background: var(--bg); padding: 15px; border-radius: 12px; font-weight: 700; text-align: center; }
         .bilan-history-list { max-height: 250px; overflow-y: auto; margin-top: 10px; text-align: left; }
 
         /* FORMULAIRES ET BOUTONS */
@@ -126,30 +107,25 @@
         button:hover { opacity: 0.9; }
         button:active { transform: scale(0.97); }
 
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-secondary { background: var(--accent); color: #2D3436; }
+        .btn-primary { background: #8C7CE6; color: white; }
+        .btn-secondary { background: #7C8CE6; color: white; }
         .btn-success { background: #52B788; color: white; }
         .btn-warning { background: #FFB7B2; color: #2D3436; }
         .btn-danger { background: #E57373; color: white; }
         .btn-outline { border: 2px dashed var(--primary); color: var(--primary); background: transparent; }
         .btn-group-row { display: flex; gap: 10px; flex-wrap: wrap; }
-        .btn-group-column { display: flex; flex-direction: column; gap: 12px; }
         .btn-sm { padding: 4px 10px; font-size: 0.8rem; }
         .btn-lg { padding: 14px 28px; font-size: 1.1rem; }
 
         /* THEMES GRID */
         .themes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .theme-card { background: var(--bg); border: 2px solid var(--border); border-radius: 14px; padding: 14px; cursor: pointer; text-align: center; transition: transform 0.2s; }
-        .theme-card:hover { transform: translateY(-3px); }
+        .theme-card { background: var(--bg); border: 2px solid var(--border); border-radius: 14px; padding: 14px; cursor: pointer; text-align: center; }
         .theme-preview { height: 50px; border-radius: 8px; margin-bottom: 8px; }
 
         /* MODALS */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.45); display: flex; justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: var(--card-bg); color: var(--text); padding: 25px; border-radius: 18px; max-width: 500px; width: 90%; position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-content { background: var(--card-bg); color: var(--text); padding: 25px; border-radius: 18px; max-width: 500px; width: 90%; position: relative; }
         .close-modal { position: absolute; top: 12px; right: 18px; font-size: 1.6rem; cursor: pointer; }
-
-        /* APP NOTIFICATION MESSAGE BANNER */
-        .app-toast { position: fixed; bottom: 20px; right: 20px; background: var(--text); color: var(--card-bg); padding: 12px 20px; border-radius: 12px; font-weight: 700; z-index: 2000; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: opacity 0.3s ease; }
 
         .hidden { display: none !important; }
         .mt-5 { margin-top: 5px; }
@@ -161,7 +137,7 @@
 </head>
 <body class="theme-dopamine-pastel">
 
-    <!-- En-tête et Navigation avec 7 Onglets -->
+    <!-- En-tête et Navigation avec 7 onglets -->
     <header>
         <div class="header-container">
             <h1 class="logo">⚡ FocusStudy</h1>
@@ -186,10 +162,10 @@
                 <button class="btn-primary" onclick="openAddModuleModal()">➕ Nouveau Module</button>
             </div>
 
-            <!-- Liste horizontale des cartes de modules -->
+            <!-- Défilé horizontal des cartes de modules -->
             <div class="modules-horizontal-scroll" id="modules-horizontal-list"></div>
 
-            <!-- Zone de détails du module sélectionné (dépliable) -->
+            <!-- Détails du module sélectionné -->
             <div id="module-detail-container" class="card detail-card hidden"></div>
         </section>
 
@@ -220,7 +196,7 @@
                     <button id="btn-pomo-reset" class="btn-danger btn-lg">🔄 Réinitialiser</button>
                 </div>
 
-                <!-- Réglages Pomodoro & Alertes Web Audio -->
+                <!-- Réglages Pomodoro & Web Audio -->
                 <div class="pomodoro-config-box">
                     <h3>⚙️ Configuration Durées & Sons Web Audio</h3>
                     <div class="form-grid-4">
@@ -285,7 +261,7 @@
         <section id="tab-recommendations" class="tab-pane">
             <div class="card max-w-700 recommendation-card">
                 <h2>🧠 Advisor Intelligente de Session</h2>
-                <p style="margin-top:6px; opacity:0.85;">Déterminez la tâche optimale à effectuer selon votre temps libre et votre motivation :</p>
+                <p>Déterminez la tâche optimale à effectuer selon votre temps libre et votre niveau d'énergie :</p>
                 <div class="input-group mt-20">
                     <label for="rec-energy">Niveau de fatigue / Énergie :</label>
                     <select id="rec-energy">
@@ -304,7 +280,7 @@
             </div>
         </section>
 
-        <!-- ONGLET 4 : PLANNING HEBDO EN GRILLE & BANQUE D'ACTIVITÉS -->
+        <!-- ONGLET 4 : PLANNING HEBDO EN TABLEAU & BANQUE D'ACTIVITÉS -->
         <section id="tab-planning" class="tab-pane">
             <div class="card">
                 <div class="section-header">
@@ -315,7 +291,7 @@
                     </div>
                 </div>
 
-                <!-- Barre d'affectation des activités enregistrées -->
+                <!-- Barre d'affectation d'activités enregistrées -->
                 <div class="schedule-assign-bar">
                     <h3>📌 Placer une activité enregistrée dans le tableau :</h3>
                     <div class="form-row mt-10">
@@ -342,7 +318,7 @@
                     </div>
 
                     <div class="btn-group-row mt-15">
-                        <button class="btn-primary" onclick="assignTaskFromBar()">📌 Placer sur la grille</button>
+                        <button class="btn-primary" onclick="assignTaskFromBar()">📌 Placer dans la case</button>
                         <button class="btn-danger" onclick="clearSelectedSlotFromBar()">🗑️ Vider le créneau</button>
                     </div>
                 </div>
@@ -375,7 +351,7 @@
                 <h2>📝 Mes Tâches Personnelles & Loisirs</h2>
                 <button class="btn-primary" onclick="openAddTaskModal()">➕ Ajouter une Tâche</button>
             </div>
-            <p style="opacity:0.85; margin-bottom: 20px;">Rangement, peinture, gym, loisirs créatifs...</p>
+            <p style="color:var(--text-muted); margin-bottom: 20px;">Rangement, peinture, gym, loisirs créatifs...</p>
             
             <div class="pinterest-grid" id="tasks-pinterest-grid"></div>
         </section>
@@ -384,7 +360,7 @@
         <section id="tab-themes" class="tab-pane">
             <div class="card">
                 <h2>🎨 Nuancier de Thèmes Pastels</h2>
-                <p style="margin-top:4px; opacity:0.85;">Palettes douces et apaisantes pour personnaliser l'intégralité de votre interface :</p>
+                <p>Palettes douces pour apaiser vos yeux et personnaliser l'interface complète :</p>
                 <div class="themes-grid mt-20">
                     <div class="theme-card" onclick="setTheme('dopamine-pastel')">
                         <div class="theme-preview" style="background: linear-gradient(135deg, #B8A7EA, #FFC6FF);"></div>
@@ -480,7 +456,7 @@
                     <h2>💾 Sauvegarde Locale</h2>
                     <div class="btn-group-column">
                         <button class="btn-secondary" onclick="exportDataJSON()">📥 Exporter Fichier JSON</button>
-                        <label class="btn-outline" style="text-align:center; padding:10px 18px; cursor:pointer; border-radius:10px; font-weight:700;">
+                        <label class="btn-outline">
                             📤 Importer Fichier JSON
                             <input type="file" id="import-json-file" accept=".json" onchange="importDataJSON(event)" style="display: none;">
                         </label>
@@ -491,7 +467,7 @@
 
     </main>
 
-    <!-- MODAL BANQUE D'ACTIVITÉS ENREGISTRÉES -->
+    <!-- MODALS -->
     <div id="modal-activity-bank" class="modal hidden">
         <div class="modal-content">
             <span class="close-modal" onclick="closeActivityBankModal()">&times;</span>
@@ -502,7 +478,7 @@
                     <input type="text" id="new-act-name" required>
                 </div>
                 <div class="input-group">
-                    <label>Couleur Pastel :</label>
+                    <label>Couleur Pastel d'affichage :</label>
                     <div class="pastel-swatches-row" id="bank-pastel-swatches"></div>
                     <input type="hidden" id="new-act-color" value="#FDE2E4">
                 </div>
@@ -514,7 +490,6 @@
         </div>
     </div>
 
-    <!-- MODAL BILAN POMODORO -->
     <div id="modal-bilan" class="modal hidden">
         <div class="modal-content">
             <span class="close-modal" onclick="closeBilanModal()">&times;</span>
@@ -525,7 +500,6 @@
         </div>
     </div>
 
-    <!-- MODAL NOUVEAU MODULE -->
     <div id="modal-add-module" class="modal hidden">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAddModuleModal()">&times;</span>
@@ -561,7 +535,6 @@
         </div>
     </div>
 
-    <!-- MODAL CRÉNEAU HORAIRE SUR MESURE -->
     <div id="modal-add-slot" class="modal hidden">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAddSlotModal()">&times;</span>
@@ -569,20 +542,19 @@
             <form id="form-add-slot">
                 <div class="form-row">
                     <div class="input-group">
-                        <label for="slot-start">Heure Début (ex: 09:00, 14:30, 00:00) :</label>
-                        <input type="text" id="slot-start" placeholder="09:00" required>
+                        <label for="slot-start">Heure Début (ex: 08:00, 14:00, 00:00) :</label>
+                        <input type="text" id="slot-start" placeholder="08:00" required>
                     </div>
                     <div class="input-group">
-                        <label for="slot-end">Heure Fin (ex: 10:30, 16:00, 01:30) :</label>
-                        <input type="text" id="slot-end" placeholder="10:30" required>
+                        <label for="slot-end">Heure Fin (ex: 09:30, 15:30, 01:30) :</label>
+                        <input type="text" id="slot-end" placeholder="09:30" required>
                     </div>
                 </div>
-                <button type="submit" class="btn-primary mt-20">Ajouter le Créneau</button>
+                <button type="submit" class="btn-primary mt-20">Ajouter l'Horaire</button>
             </form>
         </div>
     </div>
 
-    <!-- MODAL NOUVELLE TÂCHE PERSO -->
     <div id="modal-add-task" class="modal hidden">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAddTaskModal()">&times;</span>
@@ -612,9 +584,7 @@
     </div>
 
     <script>
-        // -------------------------------------------------------------
-        // PALETTE PASTELS INTACTE
-        // -------------------------------------------------------------
+        // PALETTE PASTELS D'ORIGINE
         const PASTEL_PALETTE = [
             { name: "Rose Poudré", hex: "#FDE2E4" },
             { name: "Menthe Douce", hex: "#D1F2D9" },
@@ -628,7 +598,6 @@
             { name: "Beige Vanille", hex: "#F5EBE0" }
         ];
 
-        // ÉTAT GLOBAL DE L'APPLICATION
         let appData = {
             modules: [],
             timeSlots: [
@@ -676,23 +645,10 @@
         let selectedModuleIdForPomo = null;
         let activeDetailModuleId = null;
 
-        // TOAST NOTIFICATIONS (remplace alert)
-        function showToast(msg) {
-            const existing = document.querySelector('.app-toast');
-            if (existing) existing.remove();
-            const toast = document.createElement('div');
-            toast.className = 'app-toast';
-            toast.textContent = msg;
-            document.body.appendChild(toast);
-            setTimeout(() => { toast.remove(); }, 3500);
-        }
-
-        // PARSER DU TEMPS FLEXIBLE (ex: "1h20min", "45min", "2h")
         function parseFlexibleTime(input) {
             if (!input) return 25;
             let str = input.toString().toLowerCase().trim();
             let totalMinutes = 0;
-            
             let hoursMatch = str.match(/(\d+(?:\.\d+)?)\s*h/);
             let minsMatch = str.match(/(\d+)\s*m/);
 
@@ -712,7 +668,6 @@
             return totalMinutes > 0 ? Math.round(totalMinutes) : 25;
         }
 
-        // INITIALISATION
         document.addEventListener('DOMContentLoaded', () => {
             loadLocalData();
             initNavigation();
@@ -720,36 +675,17 @@
             initEventListeners();
             applyTheme(appData.currentTheme);
             renderApp();
-            registerInlineServiceWorker();
         });
-
-        function registerInlineServiceWorker() {
-            if ('serviceWorker' in navigator) {
-                const swCode = `
-                    const CACHE_NAME = 'focus-study-v9';
-                    self.addEventListener('install', e => self.skipWaiting());
-                    self.addEventListener('activate', e => self.clients.claim());
-                    self.addEventListener('fetch', e => {
-                        e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-                    });
-                `;
-                const blob = new Blob([swCode], { type: 'application/javascript' });
-                navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
-            }
-        }
 
         function loadLocalData() {
             const saved = localStorage.getItem('focus_study_app_data');
             if (saved) {
-                try {
-                    const parsed = JSON.parse(saved);
-                    appData = { ...appData, ...parsed };
-                    if (!appData.timeSlots) appData.timeSlots = [];
-                    if (!appData.savedActivities) appData.savedActivities = [];
-                    if (!appData.timetable) appData.timetable = {};
-                    if (!appData.pomodoroHistory) appData.pomodoroHistory = [];
-                    if (!appData.customTasks) appData.customTasks = [];
-                } catch(e) { console.error('Error reading localStorage', e); }
+                appData = JSON.parse(saved);
+                if (!appData.timeSlots) appData.timeSlots = [];
+                if (!appData.savedActivities) appData.savedActivities = [];
+                if (!appData.timetable) appData.timetable = {};
+                if (!appData.pomodoroHistory) appData.pomodoroHistory = [];
+                if (!appData.customTasks) appData.customTasks = [];
             }
         }
 
@@ -774,7 +710,6 @@
         function initSwatches() {
             const bankContainer = document.getElementById('bank-pastel-swatches');
             const modContainer = document.getElementById('module-pastel-swatches');
-            
             if (bankContainer) renderSwatchesInto(bankContainer, 'new-act-color');
             if (modContainer) renderSwatchesInto(modContainer, 'new-mod-color');
         }
@@ -807,19 +742,12 @@
 
                 const chapters = [];
                 for (let i = 1; i <= chapCount; i++) {
-                    chapters.push({
-                        id: Date.now() + i,
-                        title: `Chapitre ${i}`,
-                        step1: false,
-                        step2: false,
-                        step3: false
-                    });
+                    chapters.push({ id: Date.now() + i, title: `Chapitre ${i}`, step1: false, step2: false, step3: false });
                 }
 
                 appData.modules.push({ id: Date.now(), name, color, tdCount: td, tdDone: 0, tpCount: tp, tpDone: 0, chapters, pomodoroMinutes: 0 });
                 saveData(); renderApp(); closeAddModuleModal();
                 document.getElementById('form-create-module').reset();
-                showToast(`Module "${name}" créé !`);
             });
 
             document.getElementById('form-add-slot').addEventListener('submit', (e) => {
@@ -829,7 +757,6 @@
                 appData.timeSlots.push({ id: Date.now(), start, end });
                 saveData(); renderTimetableGrid(); closeAddSlotModal();
                 document.getElementById('form-add-slot').reset();
-                showToast(`Horaire ${start} - ${end} ajouté !`);
             });
 
             document.getElementById('form-create-saved-activity').addEventListener('submit', (e) => {
@@ -839,7 +766,6 @@
                 appData.savedActivities.push({ id: Date.now(), title, color });
                 saveData(); renderSavedActivitiesList(); renderSavedActivitiesDropdown();
                 document.getElementById('form-create-saved-activity').reset();
-                showToast(`Activité "${title}" ajoutée à votre banque !`);
             });
 
             document.getElementById('form-add-task').addEventListener('submit', (e) => {
@@ -851,14 +777,13 @@
                 appData.customTasks.push({ id: Date.now(), name, energy, duration });
                 saveData(); renderTasksPinterest(); closeAddTaskModal();
                 document.getElementById('form-add-task').reset();
-                showToast(`Tâche "${name}" ajoutée !`);
             });
 
             document.getElementById('form-github-sync').addEventListener('submit', (e) => {
                 e.preventDefault();
                 appData.githubConfig.token = document.getElementById('gh-token').value.trim();
                 appData.githubConfig.repo = document.getElementById('gh-repo').value.trim();
-                saveData(); showToast('Identifiants GitHub sauvegardés !');
+                saveData(); alert('Identifiants sauvegardés !');
             });
 
             document.getElementById('btn-pomo-start').addEventListener('click', startPomodoro);
@@ -869,7 +794,6 @@
             });
         }
 
-        // RENDU GLOBAL
         function renderApp() {
             renderModulesHorizontal();
             renderPomodoroSelect();
@@ -879,16 +803,13 @@
             if (activeDetailModuleId) renderModuleDetail(activeDetailModuleId);
         }
 
-        // --- ONGLET MODULES ---
         function renderModulesHorizontal() {
             const list = document.getElementById('modules-horizontal-list');
             list.innerHTML = '';
-
             if (appData.modules.length === 0) {
-                list.innerHTML = '<p style="opacity:0.8; padding: 10px;">Aucun module pour le moment. Cliquez sur "Nouveau Module".</p>';
+                list.innerHTML = '<p style="color:var(--text-muted)">Aucun module pour le moment. Cliquez sur "Nouveau Module".</p>';
                 return;
             }
-
             appData.modules.forEach(mod => {
                 let totalSteps = mod.chapters.length * 3;
                 let doneSteps = 0;
@@ -906,7 +827,7 @@
                 const card = document.createElement('div');
                 card.className = `module-card-mini ${activeDetailModuleId === mod.id ? 'active-selected' : ''}`;
                 card.style.borderColor = mod.color;
-                card.style.backgroundColor = mod.color + "28";
+                card.style.backgroundColor = mod.color + "22";
                 card.onclick = () => toggleModuleDetail(mod.id);
 
                 card.innerHTML = `
@@ -941,7 +862,7 @@
 
             container.classList.remove('hidden');
             container.style.borderLeftColor = mod.color;
-            container.style.backgroundColor = mod.color + "18";
+            container.style.backgroundColor = mod.color + "15";
 
             let chaptersHTML = '';
             mod.chapters.forEach((chap) => {
@@ -979,27 +900,10 @@
                     <h2 style="color:var(--text);">${mod.name}</h2>
                     <button class="btn-danger" onclick="deleteModule(${mod.id})">🗑️ Supprimer Module</button>
                 </div>
-                <div style="margin-bottom:15px; font-weight:bold; display:flex; gap:15px; align-items:center; flex-wrap:wrap;">
-                    <span>📝 T.D : ${mod.tdDone}/${mod.tdCount} 
-                        <button class="btn-sm btn-outline" onclick="changeCount(${mod.id}, 'tdDone', 1)">+</button>
-                        <button class="btn-sm btn-outline" onclick="changeCount(${mod.id}, 'tdDone', -1)">-</button>
-                    </span>
-                    <span>🧪 T.P : ${mod.tpDone}/${mod.tpCount} 
-                        <button class="btn-sm btn-outline" onclick="changeCount(${mod.id}, 'tpDone', 1)">+</button>
-                        <button class="btn-sm btn-outline" onclick="changeCount(${mod.id}, 'tpDone', -1)">-</button>
-                    </span>
-                </div>
+                <p style="margin-bottom:15px; font-weight:bold;">📝 T.D : ${mod.tdDone}/${mod.tdCount} | 🧪 T.P : ${mod.tpDone}/${mod.tpCount}</p>
                 ${chaptersHTML}
                 <button class="btn-primary mt-20" onclick="addNewChapter(${mod.id})">➕ Ajouter Chapitre</button>
             `;
-        }
-
-        function changeCount(modId, key, delta) {
-            const mod = appData.modules.find(m => m.id === modId);
-            if (mod) {
-                mod[key] = Math.max(0, (mod[key] || 0) + delta);
-                saveData(); renderModuleDetail(modId);
-            }
         }
 
         function toggleStep(modId, chapId, stepKey) {
@@ -1017,7 +921,6 @@
             } else if (stepKey === 'step3' && chap.step1 && chap.step2) {
                 chap.step3 = !chap.step3;
             }
-
             saveData(); renderApp();
         }
 
@@ -1039,20 +942,20 @@
 
         function deleteChapter(modId, chapId) {
             const mod = appData.modules.find(m => m.id === modId);
-            if (mod) {
+            if (mod && confirm('Supprimer ce chapitre ?')) {
                 mod.chapters = mod.chapters.filter(c => c.id !== chapId);
                 saveData(); renderApp();
             }
         }
 
         function deleteModule(modId) {
-            appData.modules = appData.modules.filter(m => m.id !== modId);
-            activeDetailModuleId = null;
-            saveData(); renderApp();
-            showToast('Module supprimé.');
+            if (confirm('Supprimer définitivement ce module ?')) {
+                appData.modules = appData.modules.filter(m => m.id !== modId);
+                activeDetailModuleId = null;
+                saveData(); renderApp();
+            }
         }
 
-        // --- BANQUE D'ACTIVITÉS ET PLANNING HEBDO ---
         function renderSavedActivitiesDropdown() {
             const sel = document.getElementById('assign-saved-activity');
             if (!sel) return;
@@ -1080,7 +983,7 @@
             appData.savedActivities.forEach(act => {
                 const div = document.createElement('div');
                 div.className = 'bank-item';
-                div.style.backgroundColor = act.color + "77";
+                div.style.backgroundColor = act.color + "55";
                 div.innerHTML = `
                     <span>${act.title}</span>
                     <button class="btn-danger btn-sm" onclick="deleteSavedActivity(${act.id})">🗑️</button>
@@ -1111,7 +1014,6 @@
                 slotSelect.appendChild(opt);
 
                 const tr = document.createElement('tr');
-                
                 const tdTime = document.createElement('td');
                 tdTime.className = 'time-slot-label';
                 tdTime.textContent = `${slot.start} - ${slot.end}`;
@@ -1162,11 +1064,10 @@
             const slotId = document.getElementById('assign-slot').value;
 
             const act = appData.savedActivities.find(a => a.id == actId);
-            if (!act) { showToast('Ajoutez d\'abord une activité à votre banque d\'activités.'); return; }
+            if (!act) { alert('Veuillez d\'abord ajouter une activité à votre banque d\'activités.'); return; }
 
             appData.timetable[`${day}-${slotId}`] = { title: act.title, color: act.color };
             saveData(); renderTimetableGrid();
-            showToast(`Activité assignée à ${day} !`);
         }
 
         function clearSelectedSlotFromBar() {
@@ -1174,16 +1075,15 @@
             const slotId = document.getElementById('assign-slot').value;
             delete appData.timetable[`${day}-${slotId}`];
             saveData(); renderTimetableGrid();
-            showToast('Créneau vidé.');
         }
 
         function deleteTimeSlot(slotId) {
-            appData.timeSlots = appData.timeSlots.filter(s => s.id !== slotId);
-            saveData(); renderTimetableGrid();
-            showToast('Horaire supprimé.');
+            if (confirm('Supprimer ce créneau horaire du tableau ?')) {
+                appData.timeSlots = appData.timeSlots.filter(s => s.id !== slotId);
+                saveData(); renderTimetableGrid();
+            }
         }
 
-        // --- POMODORO ---
         function renderPomodoroSelect() {
             const sel = document.getElementById('pomo-module-select');
             sel.innerHTML = '<option value="">-- Session libre / Aucun module --</option>';
@@ -1200,13 +1100,11 @@
             appData.pomodoroConfig.shortBreakMin = parseFlexibleTime(document.getElementById('cfg-pomo-short').value);
             appData.pomodoroConfig.longBreakMin = parseFlexibleTime(document.getElementById('cfg-pomo-long').value);
             appData.pomodoroConfig.cyclesBeforeLong = parseInt(document.getElementById('cfg-pomo-cycles').value) || 4;
-            
             appData.pomodoroConfig.soundWork = document.getElementById('sound-work').value;
             appData.pomodoroConfig.soundShort = document.getElementById('sound-short').value;
             appData.pomodoroConfig.soundLong = document.getElementById('sound-long').value;
 
-            saveData(); resetPomodoro();
-            showToast('Réglages Pomodoro enregistrés !');
+            saveData(); resetPomodoro(); alert('Réglages Pomodoro enregistrés !');
         }
 
         function playSound(type) {
@@ -1268,7 +1166,6 @@
 
         function handleTimerCompletion() {
             pausePomodoro();
-
             const todayStr = new Date().toLocaleDateString('fr-FR');
             const mod = appData.modules.find(m => m.id === selectedModuleIdForPomo);
             const modName = mod ? mod.name : 'Session Libre';
@@ -1278,12 +1175,7 @@
                 const minsWorked = appData.pomodoroConfig.workMin;
                 if (mod) { mod.pomodoroMinutes += minsWorked; }
 
-                appData.pomodoroHistory.push({
-                    id: Date.now(),
-                    date: todayStr,
-                    moduleName: modName,
-                    minutes: minsWorked
-                });
+                appData.pomodoroHistory.push({ id: Date.now(), date: todayStr, moduleName: modName, minutes: minsWorked });
                 saveData(); renderModulesHorizontal();
 
                 if (currentCycle % appData.pomodoroConfig.cyclesBeforeLong === 0) {
@@ -1294,19 +1186,13 @@
                     document.getElementById('timer-status').textContent = "Pause Courte ! ☕";
                 }
                 currentCycle++;
-            } else if (currentMode === 'shortBreak') {
-                playSound(appData.pomodoroConfig.soundShort || 'marimba');
-                currentMode = 'work'; timerSecondsLeft = appData.pomodoroConfig.workMin * 60;
-                document.getElementById('timer-status').textContent = "Session de Travail";
-            } else if (currentMode === 'longBreak') {
-                playSound(appData.pomodoroConfig.soundLong || 'gong');
+            } else {
+                playSound(currentMode === 'shortBreak' ? appData.pomodoroConfig.soundShort : appData.pomodoroConfig.soundLong);
                 currentMode = 'work'; timerSecondsLeft = appData.pomodoroConfig.workMin * 60;
                 document.getElementById('timer-status').textContent = "Session de Travail";
             }
-
             document.getElementById('timer-cycles').textContent = `Cycle ${currentCycle}`;
-            updateClockDisplay();
-            showToast('Session terminée !');
+            updateClockDisplay(); alert('Temps écoulé !');
         }
 
         function updateClockDisplay() {
@@ -1315,7 +1201,6 @@
             document.getElementById('timer-time').textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
 
-        // MODAL BILAN
         function openBilanModal() {
             const modal = document.getElementById('modal-bilan');
             const summary = document.getElementById('bilan-stats-summary');
@@ -1323,18 +1208,14 @@
 
             let totalMins = 0;
             appData.pomodoroHistory.forEach(h => totalMins += h.minutes);
-            const totalHours = (totalMins / 60).toFixed(1);
-
-            summary.innerHTML = `🏆 <strong>Total Étudié :</strong> ${totalHours} heures (${totalMins} min) | <strong>${appData.pomodoroHistory.length} Sessions</strong>`;
+            summary.innerHTML = `🏆 **Total Étudié :** ${(totalMins/60).toFixed(1)}h (${totalMins} min) | **${appData.pomodoroHistory.length} Sessions**`;
 
             list.innerHTML = '';
             if (appData.pomodoroHistory.length === 0) {
-                list.innerHTML = '<p style="padding:10px;">Aucune session enregistrée.</p>';
+                list.innerHTML = '<p>Aucune session enregistrée.</p>';
             } else {
                 appData.pomodoroHistory.slice().reverse().forEach(h => {
-                    list.innerHTML += `<div style="padding:8px; border-bottom:1px solid var(--border);">
-                        📅 <strong>${h.date}</strong> - ${h.moduleName} : ⏱️ ${h.minutes} min
-                    </div>`;
+                    list.innerHTML += `<div style="padding:8px; border-bottom:1px solid var(--border);">📅 <strong>${h.date}</strong> - ${h.moduleName} : ⏱️ ${h.minutes} min</div>`;
                 });
             }
             modal.classList.remove('hidden');
@@ -1342,12 +1223,10 @@
 
         function closeBilanModal() { document.getElementById('modal-bilan').classList.add('hidden'); }
 
-        // --- TÂCHES PERSO & RECOMMANDATIONS ---
         function renderTasksPinterest() {
             const grid = document.getElementById('tasks-pinterest-grid');
             if (!grid) return;
             grid.innerHTML = '';
-
             appData.customTasks.forEach(t => {
                 const card = document.createElement('div');
                 card.className = 'pinterest-card';
@@ -1374,15 +1253,14 @@
             let html = `<h3>🚀 Recommandation suggérée :</h3>`;
             if (matching.length > 0) {
                 const best = matching[Math.floor(Math.random() * matching.length)];
-                html += `<p class="mt-15"><strong>${best.name}</strong> (${best.duration})</p>`;
+                html += `<p class="mt-20"><strong>${best.name}</strong> (${best.duration})</p>`;
             } else {
-                html += `<p class="mt-15">Réviser ${timeMins} min de l'Étape 1 ou 2 d'un de vos modules d'études.</p>`;
+                html += `<p class="mt-20">Réviser ${timeMins} min de l'Étape 1 ou 2 d'un de vos modules d'études.</p>`;
             }
             box.innerHTML = html; box.classList.remove('hidden');
         }
 
-        // --- THÈMES ET MODALS ---
-        function setTheme(name) { appData.currentTheme = name; applyTheme(name); saveData(); showToast('Thème mis à jour !'); }
+        function setTheme(name) { appData.currentTheme = name; applyTheme(name); saveData(); }
         function applyTheme(name) { document.body.className = `theme-${name}`; }
 
         function openAddModuleModal() { document.getElementById('modal-add-module').classList.remove('hidden'); }
@@ -1394,7 +1272,6 @@
         function openActivityBankModal() { renderSavedActivitiesList(); document.getElementById('modal-activity-bank').classList.remove('hidden'); }
         function closeActivityBankModal() { document.getElementById('modal-activity-bank').classList.add('hidden'); }
 
-        // --- GITHUB API PUSH/PULL & IMPORT/EXPORT JSON ---
         function exportDataJSON() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
             const dl = document.createElement('a'); dl.setAttribute("href", dataStr); dl.setAttribute("download", "focus_backup.json");
@@ -1405,9 +1282,7 @@
             const file = e.target.files[0]; if (!file) return;
             const reader = new FileReader();
             reader.onload = function(evt) {
-                try {
-                    appData = JSON.parse(evt.target.result); saveData(); renderApp(); showToast('Données importées avec succès !');
-                } catch(err) { showToast('Fichier JSON invalide.'); }
+                try { appData = JSON.parse(evt.target.result); saveData(); renderApp(); alert('Données importées avec succès !'); } catch(err) { alert('Fichier JSON invalide.'); }
             };
             reader.readAsText(file);
         }
@@ -1425,13 +1300,12 @@
                     headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message: 'Update FocusStudy Data', content: contentBase64, sha: sha })
                 });
-                showToast('Synchronisé sur GitHub !');
             } catch (err) { console.error('GitHub Push Error:', err); }
         }
 
         async function pullFromGitHub() {
             const { token, repo } = appData.githubConfig;
-            if (!token || !repo) { showToast('Renseignez d\'abord vos identifiants GitHub.'); return; }
+            if (!token || !repo) { alert('Renseignez d\'abord vos identifiants GitHub.'); return; }
             const url = `https://api.github.com/repos/${repo}/contents/data.json`;
             try {
                 const res = await fetch(url, { headers: { 'Authorization': `token ${token}` } });
@@ -1440,9 +1314,9 @@
                     const decoded = decodeURIComponent(escape(atob(data.content)));
                     appData = JSON.parse(decoded);
                     localStorage.setItem('focus_study_app_data', JSON.stringify(appData));
-                    applyTheme(appData.currentTheme || 'dopamine-pastel'); renderApp(); showToast('Données réhydratées depuis GitHub !');
+                    applyTheme(appData.currentTheme || 'dopamine-pastel'); renderApp(); alert('Données synchronisées depuis GitHub !');
                 }
-            } catch (err) { showToast('Erreur Sync GitHub'); }
+            } catch (err) { alert('Erreur Pull GitHub: ' + err.message); }
         }
     </script>
 </body>
