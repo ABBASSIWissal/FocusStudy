@@ -93,14 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initEventListeners();
     applyTheme(appData.currentTheme);
     renderApp();
-    registerSW();
 });
-
-function registerSW() {
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW error:', err));
-    }
-}
 
 function loadLocalData() {
     const saved = localStorage.getItem('focus_study_app_data');
