@@ -1,4 +1,4 @@
-/* PALETTES DE COULEURS PASTELS DOUCES ET ASSORTIES (ARRIÈRE-PLAN TEINTÉ SANS ÉBLOUISSEMENT) */
+/* PALETTES DE COULEURS PASTELS DOUCES ET ASSORTIES */
 body.theme-dopamine-pastel { --primary: #8C7CE6; --accent: #FFB7B2; --bg: #EAE6F7; --card-bg: #FFFFFF; --text: #2D3436; --border: #D8D0F2; --header-bg: linear-gradient(135deg, #B8A7EA, #FFC6FF); }
 body.theme-matcha-douceur { --primary: #52B788; --accent: #E9D8A6; --bg: #E4F2E8; --card-bg: #FFFFFF; --text: #1E272E; --border: #C1E2CE; --header-bg: linear-gradient(135deg, #A8E6CF, #DCEDC1); }
 body.theme-cappuccino-creme { --primary: #A1887F; --accent: #D7CCC8; --bg: #EFE8E3; --card-bg: #FFFFFF; --text: #3E2723; --border: #E0D5D0; --header-bg: linear-gradient(135deg, #D7CCC8, #F5EBE0); }
@@ -23,8 +23,8 @@ header { background: var(--header-bg); color: #2D3436; padding: 1rem 1.5rem; pos
 .header-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
 .logo { font-size: 1.5rem; font-weight: 800; color: var(--text); }
 .main-nav { display: flex; gap: 8px; flex-wrap: wrap; }
-.nav-btn { background: rgba(255,255,255,0.45); border: none; color: var(--text); padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: background 0.2s; }
-.nav-btn.active { background: white; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.nav-btn { background: rgba(255,255,255,0.8); border: none; color: var(--text); padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.2s; }
+.nav-btn.active { background: white; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.12); transform: translateY(-1px); }
 
 .main-content { max-width: 1200px; margin: 25px auto; padding: 0 15px; }
 .tab-pane { display: none; }
@@ -52,7 +52,7 @@ header { background: var(--header-bg); color: #2D3436; padding: 1rem 1.5rem; pos
 .step-item { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-size: 0.95rem; color: #2D3436; font-weight: 600; }
 .step-item.disabled { opacity: 0.45; cursor: not-allowed; }
 
-/* RECOMMANDATIONS ET TÂCHES PERSO ASSORTIES AU THÈME */
+/* RECOMMANDATIONS ET TÂCHES PERSO */
 .recommendation-card { border-top: 6px solid var(--primary); }
 .ultimate-result-box { background: var(--bg); border: 2px dashed var(--primary); padding: 20px; border-radius: 14px; margin-top: 20px; font-weight: 700; }
 
@@ -61,11 +61,10 @@ header { background: var(--header-bg); color: #2D3436; padding: 1rem 1.5rem; pos
 .pinterest-card:hover { transform: translateY(-4px); }
 .pinterest-card-tag { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; padding: 4px 10px; border-radius: 12px; background: var(--bg); color: var(--primary); display: inline-block; margin-bottom: 10px; }
 
-/* BANQUE D'ACTIVITÉS */
+/* BANQUE D'ACTIVITÉS ET SWATCHES PASTELS */
 .bank-list { max-height: 220px; overflow-y: auto; }
 .bank-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: 10px; margin-bottom: 8px; border: 1px solid var(--border); font-weight: 700; }
 
-/* SWATCHES PASTELS */
 .pastel-swatches-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
 .pastel-swatch-btn { width: 32px; height: 32px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.15s; }
 .pastel-swatch-btn:hover, .pastel-swatch-btn.selected { transform: scale(1.2); border-color: #2D3436; }
@@ -101,8 +100,8 @@ button { border: none; border-radius: 10px; padding: 10px 18px; font-weight: 700
 button:hover { opacity: 0.9; }
 button:active { transform: scale(0.97); }
 
-.btn-primary { background: var(--primary); color: white; }
-.btn-secondary { background: var(--accent); color: #2D3436; }
+.btn-primary { background: #8C7CE6; color: white; }
+.btn-secondary { background: #7C8CE6; color: white; }
 .btn-success { background: #52B788; color: white; }
 .btn-warning { background: #FFB7B2; color: #2D3436; }
 .btn-danger { background: #E57373; color: white; }
