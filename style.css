@@ -1,4 +1,4 @@
-/* PALETTES DE COULEURS PASTELS DOUCES ET ASSORTIES */
+/* PALETTES DE COULEURS PASTELS DOUCES ET ASSORTIES SUR ARRIÈRE-PLAN TEINTÉ */
 body.theme-dopamine-pastel { --primary: #8C7CE6; --accent: #FFB7B2; --bg: #EAE6F7; --card-bg: #FFFFFF; --text: #2D3436; --border: #D8D0F2; --header-bg: linear-gradient(135deg, #B8A7EA, #FFC6FF); }
 body.theme-matcha-douceur { --primary: #52B788; --accent: #E9D8A6; --bg: #E4F2E8; --card-bg: #FFFFFF; --text: #1E272E; --border: #C1E2CE; --header-bg: linear-gradient(135deg, #A8E6CF, #DCEDC1); }
 body.theme-cappuccino-creme { --primary: #A1887F; --accent: #D7CCC8; --bg: #EFE8E3; --card-bg: #FFFFFF; --text: #3E2723; --border: #E0D5D0; --header-bg: linear-gradient(135deg, #D7CCC8, #F5EBE0); }
@@ -33,7 +33,7 @@ header { background: var(--header-bg); color: #2D3436; padding: 1rem 1.5rem; pos
 .section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
 .max-w-700 { max-width: 700px; margin: 0 auto; }
 
-/* MODULES HORIZONTAUX ET CARTES DÉTAILS */
+/* MODULES HORIZONTAUX */
 .modules-horizontal-scroll { display: flex; gap: 15px; overflow-x: auto; padding: 10px 5px 20px 5px; }
 .module-card-mini { min-width: 240px; background: var(--card-bg); border: 2px solid var(--border); border-radius: 14px; padding: 16px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; flex-shrink: 0; }
 .module-card-mini:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
