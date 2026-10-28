@@ -1,4 +1,4 @@
-// PALETTE PASTELS D'ORIGINE CONSERVÉE
+// PALETTE PASTELS D'ORIGINE
 const PASTEL_PALETTE = [
     { name: "Rose Poudré", hex: "#FDE2E4" },
     { name: "Menthe Douce", hex: "#D1F2D9" },
