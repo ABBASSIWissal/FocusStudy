@@ -3,149 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FocusStudy & Concentration</title>
-    <style>
-        /* PALETTES DE COULEURS PASTELS DOUCES ET ASSORTIES SUR ARRIÈRE-PLAN TEINTÉ */
-        body.theme-dopamine-pastel { --primary: #8C7CE6; --accent: #FFB7B2; --bg: #EAE6F7; --card-bg: #FFFFFF; --text: #2D3436; --border: #D8D0F2; --header-bg: linear-gradient(135deg, #B8A7EA, #FFC6FF); }
-        body.theme-matcha-douceur { --primary: #52B788; --accent: #E9D8A6; --bg: #E4F2E8; --card-bg: #FFFFFF; --text: #1E272E; --border: #C1E2CE; --header-bg: linear-gradient(135deg, #A8E6CF, #DCEDC1); }
-        body.theme-cappuccino-creme { --primary: #A1887F; --accent: #D7CCC8; --bg: #EFE8E3; --card-bg: #FFFFFF; --text: #3E2723; --border: #E0D5D0; --header-bg: linear-gradient(135deg, #D7CCC8, #F5EBE0); }
-        body.theme-sakura-bloom { --primary: #E57373; --accent: #FFB7B2; --bg: #FDE8E8; --card-bg: #FFFFFF; --text: #2D3436; --border: #F8C8C8; --header-bg: linear-gradient(135deg, #FFB7B2, #FFDAC1); }
-        body.theme-myrtille-pastel { --primary: #7986CB; --accent: #B39DDB; --bg: #E6E8F7; --card-bg: #FFFFFF; --text: #1A237E; --border: #D1D6F2; --header-bg: linear-gradient(135deg, #C7CEEA, #E2D4F9); }
-        body.theme-citronnade-glacee { --primary: #D4AC0D; --accent: #81C784; --bg: #F9F8DB; --card-bg: #FFFFFF; --text: #333333; --border: #E8E7C8; --header-bg: linear-gradient(135deg, #FFF1C5, #E8F5E9); }
-        body.theme-nuage-celeste { --primary: #4FC3F7; --accent: #80DEEA; --bg: #DCF6FA; --card-bg: #FFFFFF; --text: #01579B; --border: #BCECF5; --header-bg: linear-gradient(135deg, #B9F3FC, #A5F3FC); }
-        body.theme-peche-rosee { --primary: #FF8A65; --accent: #F8BBD0; --bg: #FDE9E0; --card-bg: #FFFFFF; --text: #3E2723; --border: #F7D2C4; --header-bg: linear-gradient(135deg, #FFD8BE, #F7C8E0); }
-        body.theme-sauge-apaisante { --primary: #66BB6A; --accent: #A5D6A7; --bg: #E1F2E6; --card-bg: #FFFFFF; --text: #1B5E20; --border: #BCE2C4; --header-bg: linear-gradient(135deg, #C8E6C9, #E8F5E9); }
-        body.theme-lilas-reveur { --primary: #AB47BC; --accent: #CE93D8; --bg: #F5E8F7; --card-bg: #FFFFFF; --text: #4A148C; --border: #E5C9EA; --header-bg: linear-gradient(135deg, #E1BEE7, #F3E5F5); }
-        body.theme-abricot-doux { --primary: #FFA726; --accent: #FFCC80; --bg: #FAF0D7; --card-bg: #FFFFFF; --text: #E65100; --border: #F7E1B8; --header-bg: linear-gradient(135deg, #FFE0B2, #FFF3E0); }
-        body.theme-ecume-marine { --primary: #26A69A; --accent: #80CBC4; --bg: #E1F4F4; --card-bg: #FFFFFF; --text: #004D40; --border: #BCE6E3; --header-bg: linear-gradient(135deg, #B2DFDB, #E0F2F1); }
-        body.theme-framboise-pastel { --primary: #EC407A; --accent: #F48FB1; --bg: #FCE4EC; --card-bg: #FFFFFF; --text: #880E4F; --border: #F8BBD0; --header-bg: linear-gradient(135deg, #F8A5C2, #F78FB3); }
-        body.theme-menthe-glacee { --primary: #26A69A; --accent: #80CBC4; --bg: #D4F3EF; --card-bg: #FFFFFF; --text: #004D40; --border: #A7E0D9; --header-bg: linear-gradient(135deg, #78E08F, #38ADA9); }
-        body.theme-vanille-etoilee { --primary: #F6B93B; --accent: #F7D794; --bg: #FDF6E3; --card-bg: #FFFFFF; --text: #594711; --border: #F5E5B8; --header-bg: linear-gradient(135deg, #F6B93B, #FFF1C5); }
-        body.theme-glycine-pastel { --primary: #AB47BC; --accent: #E8A7A1; --bg: #F6E6F7; --card-bg: #FFFFFF; --text: #4A148C; --border: #E4C5EB; --header-bg: linear-gradient(135deg, #E8A7A1, #D980FA); }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background: var(--bg); color: var(--text); padding-bottom: 50px; transition: background 0.3s ease; }
-
-        header { background: var(--header-bg); color: #2D3436; padding: 1rem 1.5rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
-        .header-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-        .logo { font-size: 1.5rem; font-weight: 800; color: var(--text); }
-        .main-nav { display: flex; gap: 8px; flex-wrap: wrap; }
-        .nav-btn { background: rgba(255,255,255,0.8); border: none; color: var(--text); padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.2s; }
-        .nav-btn.active { background: white; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.12); transform: translateY(-1px); }
-
-        .main-content { max-width: 1200px; margin: 25px auto; padding: 0 15px; }
-        .tab-pane { display: none; }
-        .tab-pane.active { display: block; }
-        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); margin-bottom: 20px; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
-        .max-w-700 { max-width: 700px; margin: 0 auto; }
-
-        /* MODULES HORIZONTAUX */
-        .modules-horizontal-scroll { display: flex; gap: 15px; overflow-x: auto; padding: 10px 5px 20px 5px; }
-        .module-card-mini { min-width: 240px; background: var(--card-bg); border: 2px solid var(--border); border-radius: 14px; padding: 16px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; flex-shrink: 0; }
-        .module-card-mini:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
-        .module-card-mini.active-selected { border-width: 3px; }
-
-        .mod-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .mod-title { font-size: 1.1rem; font-weight: 800; color: var(--text); }
-        .mod-pomo-time { font-size: 0.85rem; font-weight: 700; background: var(--bg); padding: 4px 8px; border-radius: 8px; color: var(--text); }
-
-        .progress-bar { background: var(--border); height: 10px; border-radius: 10px; overflow: hidden; margin: 10px 0; }
-        .progress-fill { background: #52B788; height: 100%; width: 0%; transition: width 0.4s; }
-
-        /* DÉTAIL MODULE */
-        .detail-card { border-left: 8px solid var(--primary); animation: fadeIn 0.3s; margin-top: 15px; }
-        .chapter-box { background: #FFFFFF; border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-        .step-item { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-size: 0.95rem; color: #2D3436; font-weight: 600; }
-        .step-item.disabled { opacity: 0.45; cursor: not-allowed; }
-
-        /* RECOMMANDATIONS ET TÂCHES PERSO */
-        .recommendation-card { border-top: 6px solid var(--primary); }
-        .ultimate-result-box { background: var(--bg); border: 2px dashed var(--primary); padding: 20px; border-radius: 14px; margin-top: 20px; font-weight: 700; }
-
-        .pinterest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-        .pinterest-card { background: var(--card-bg); border: 1px solid var(--border); border-top: 5px solid var(--primary); border-radius: 16px; padding: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: transform 0.2s; position: relative; }
-        .pinterest-card:hover { transform: translateY(-4px); }
-        .pinterest-card-tag { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; padding: 4px 10px; border-radius: 12px; background: var(--bg); color: var(--primary); display: inline-block; margin-bottom: 10px; }
-
-        /* BANQUE D'ACTIVITÉS ET SWATCHES PASTELS */
-        .bank-list { max-height: 220px; overflow-y: auto; }
-        .bank-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: 10px; margin-bottom: 8px; border: 1px solid var(--border); font-weight: 700; }
-
-        .pastel-swatches-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
-        .pastel-swatch-btn { width: 32px; height: 32px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.15s; }
-        .pastel-swatch-btn:hover, .pastel-swatch-btn.selected { transform: scale(1.2); border-color: #2D3436; }
-
-        /* PLANNING HEBDO GRID TABLEAU */
-        .schedule-assign-bar { background: var(--bg); padding: 18px; border-radius: 14px; border: 1px solid var(--border); }
-        .timetable-scroll-box { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
-        .timetable-grid { width: 100%; border-collapse: collapse; min-width: 850px; background: white; }
-        .timetable-grid th { background: var(--bg); padding: 12px; font-size: 0.9rem; font-weight: 800; border: 1px solid var(--border); text-align: center; color: var(--text); }
-        .timetable-grid td { border: 1px solid var(--border); height: 55px; vertical-align: middle; text-align: center; font-size: 0.85rem; padding: 4px; position: relative; }
-        .time-slot-label { font-weight: 800; color: var(--text); background: var(--bg); width: 110px; }
-        .cell-slot { cursor: pointer; transition: background 0.15s; }
-        .cell-slot:hover { background: rgba(0,0,0,0.03); }
-        .slot-badge { padding: 8px 10px; border-radius: 10px; font-weight: 700; color: #2D3436; font-size: 0.85rem; display: block; box-shadow: 0 2px 6px rgba(0,0,0,0.06); text-align: center; word-break: break-word; }
-
-        /* POMODORO */
-        .pomodoro-card { text-align: center; }
-        .pomodoro-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .timer-display-box { background: var(--bg); border-radius: 20px; padding: 25px; margin: 20px 0; border: 2px dashed var(--border); }
-        .timer-clock { font-size: 4.5rem; font-weight: 900; color: var(--primary); margin: 10px 0; }
-        .pomodoro-controls-btns { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; }
-        .bilan-summary-box { background: var(--bg); padding: 15px; border-radius: 12px; font-weight: 700; text-align: center; }
-        .bilan-history-list { max-height: 250px; overflow-y: auto; margin-top: 10px; text-align: left; }
-
-        /* FORMULAIRES ET BOUTONS */
-        .form-row { display: flex; gap: 12px; flex-wrap: wrap; }
-        .form-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
-        .form-grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
-        .input-group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 140px; margin-bottom: 10px; }
-        .input-group label { font-size: 0.85rem; font-weight: 700; color: var(--text); }
-        input[type="text"], input[type="number"], input[type="password"], select { padding: 10px 14px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); border-radius: 10px; font-size: 0.95rem; outline: none; }
-        button { border: none; border-radius: 10px; padding: 10px 18px; font-weight: 700; cursor: pointer; transition: transform 0.1s, opacity 0.2s; }
-        button:hover { opacity: 0.9; }
-        button:active { transform: scale(0.97); }
-
-        .btn-primary { background: #8C7CE6; color: white; }
-        .btn-secondary { background: #7C8CE6; color: white; }
-        .btn-success { background: #52B788; color: white; }
-        .btn-warning { background: #FFB7B2; color: #2D3436; }
-        .btn-danger { background: #E57373; color: white; }
-        .btn-outline { border: 2px dashed var(--primary); color: var(--primary); background: transparent; }
-        .btn-group-row { display: flex; gap: 10px; flex-wrap: wrap; }
-        .btn-sm { padding: 4px 10px; font-size: 0.8rem; }
-        .btn-lg { padding: 14px 28px; font-size: 1.1rem; }
-
-        /* THEMES GRID */
-        .themes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .theme-card { background: var(--bg); border: 2px solid var(--border); border-radius: 14px; padding: 14px; cursor: pointer; text-align: center; }
-        .theme-preview { height: 50px; border-radius: 8px; margin-bottom: 8px; }
-
-        /* MODALS */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.45); display: flex; justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: var(--card-bg); color: var(--text); padding: 25px; border-radius: 18px; max-width: 500px; width: 90%; position: relative; }
-        .close-modal { position: absolute; top: 12px; right: 18px; font-size: 1.6rem; cursor: pointer; }
-
-        .hidden { display: none !important; }
-        .mt-5 { margin-top: 5px; }
-        .mt-10 { margin-top: 10px; }
-        .mt-15 { margin-top: 15px; }
-        .mt-20 { margin-top: 20px; }
-        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-    </style>
+    <title>FocusStudy & Planning</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="theme-dopamine-pastel">
 
-    <!-- En-tête et Navigation avec 7 onglets -->
+    <!-- En-tête avec Navigation à 7 Onglets -->
     <header>
         <div class="header-container">
             <h1 class="logo">⚡ FocusStudy</h1>
             <nav class="main-nav">
-                <button class="nav-btn active" data-tab="tab-modules">📖 Modules</button>
+                <button class="nav-btn" data-tab="tab-modules">📖 Modules</button>
                 <button class="nav-btn" data-tab="tab-pomodoro">⏱️ Pomodoro</button>
                 <button class="nav-btn" data-tab="tab-recommendations">🧠 Recommandations</button>
-                <button class="nav-btn" data-tab="tab-planning">📅 Planning Hebdo</button>
+                <button class="nav-btn active" data-tab="tab-planning">📅 Planning Hebdo</button>
                 <button class="nav-btn" data-tab="tab-tasks">📝 Tâches Perso</button>
                 <button class="nav-btn" data-tab="tab-themes">🎨 Thèmes</button>
                 <button class="nav-btn" data-tab="tab-config">⚙️ Configuration</button>
@@ -156,16 +27,16 @@
     <main class="main-content">
 
         <!-- ONGLET 1 : MODULES -->
-        <section id="tab-modules" class="tab-pane active">
+        <section id="tab-modules" class="tab-pane">
             <div class="section-header">
                 <h2>📖 Mes Modules d'Études</h2>
                 <button class="btn-primary" onclick="openAddModuleModal()">➕ Nouveau Module</button>
             </div>
 
-            <!-- Défilé horizontal des cartes de modules -->
+            <!-- Liste défilante des cartes de modules -->
             <div class="modules-horizontal-scroll" id="modules-horizontal-list"></div>
 
-            <!-- Détails du module sélectionné -->
+            <!-- Zone de détail du module sélectionné -->
             <div id="module-detail-container" class="card detail-card hidden"></div>
         </section>
 
@@ -196,7 +67,7 @@
                     <button id="btn-pomo-reset" class="btn-danger btn-lg">🔄 Réinitialiser</button>
                 </div>
 
-                <!-- Réglages Pomodoro & Web Audio -->
+                <!-- Réglages Durées et Sons Web Audio -->
                 <div class="pomodoro-config-box">
                     <h3>⚙️ Configuration Durées & Sons Web Audio</h3>
                     <div class="form-grid-4">
@@ -280,18 +151,18 @@
             </div>
         </section>
 
-        <!-- ONGLET 4 : PLANNING HEBDO EN TABLEAU & BANQUE D'ACTIVITÉS -->
-        <section id="tab-planning" class="tab-pane">
+        <!-- ONGLET 4 : PLANNING HEBDO EN TABLEAU (Séparé) -->
+        <section id="tab-planning" class="tab-pane active">
             <div class="card">
                 <div class="section-header">
                     <h2>📅 Emploi du Temps Hebdomadaire sur Mesure</h2>
                     <div class="btn-group-row">
-                        <button class="btn-secondary" onclick="openAddSlotModal()">⏰ Créer un Horaire</button>
-                        <button class="btn-primary" onclick="openActivityBankModal()">⭐ Banque d'Activités</button>
+                        <button class="btn-warning" onclick="openAddSlotModal()">⏰ Créer un Horaire</button>
+                        <button class="btn-secondary" onclick="openActivityBankModal()">⭐ Banque d'Activités</button>
                     </div>
                 </div>
 
-                <!-- Barre d'affectation d'activités enregistrées -->
+                <!-- Barre d'affectation rapide des activités dans la grille -->
                 <div class="schedule-assign-bar">
                     <h3>📌 Placer une activité enregistrée dans le tableau :</h3>
                     <div class="form-row mt-10">
@@ -323,7 +194,7 @@
                     </div>
                 </div>
 
-                <!-- Grille Tableau du Planning -->
+                <!-- Grille du Planning Hebdomadaire -->
                 <div class="timetable-scroll-box mt-20">
                     <table class="timetable-grid" id="timetable-table">
                         <thead>
@@ -345,22 +216,22 @@
             </div>
         </section>
 
-        <!-- ONGLET 5 : TÂCHES PERSONNELLES (Pinterest Style) -->
+        <!-- ONGLET 5 : TÂCHES PERSONNELLES (Séparées) -->
         <section id="tab-tasks" class="tab-pane">
             <div class="section-header">
                 <h2>📝 Mes Tâches Personnelles & Loisirs</h2>
                 <button class="btn-primary" onclick="openAddTaskModal()">➕ Ajouter une Tâche</button>
             </div>
-            <p style="color:var(--text-muted); margin-bottom: 20px;">Rangement, peinture, gym, loisirs créatifs...</p>
+            <p style="color:var(--text-muted); margin-bottom: 20px;">Cartes personnalisées : rangement, sport, dessin, loisirs...</p>
             
             <div class="pinterest-grid" id="tasks-pinterest-grid"></div>
         </section>
 
-        <!-- ONGLET 6 : THÈMES PASTELS DIVERSIFIÉS -->
+        <!-- ONGLET 6 : THÈMES PASTELS -->
         <section id="tab-themes" class="tab-pane">
             <div class="card">
                 <h2>🎨 Nuancier de Thèmes Pastels</h2>
-                <p>Palettes douces pour apaiser vos yeux et personnaliser l'interface complète :</p>
+                <p>Sélectionnez votre ambiance visuelle pastel :</p>
                 <div class="themes-grid mt-20">
                     <div class="theme-card" onclick="setTheme('dopamine-pastel')">
                         <div class="theme-preview" style="background: linear-gradient(135deg, #B8A7EA, #FFC6FF);"></div>
@@ -456,7 +327,7 @@
                     <h2>💾 Sauvegarde Locale</h2>
                     <div class="btn-group-column">
                         <button class="btn-secondary" onclick="exportDataJSON()">📥 Exporter Fichier JSON</button>
-                        <label class="btn-outline">
+                        <label class="btn-outline" style="cursor: pointer; display: inline-block; padding: 10px 18px; text-align: center;">
                             📤 Importer Fichier JSON
                             <input type="file" id="import-json-file" accept=".json" onchange="importDataJSON(event)" style="display: none;">
                         </label>
@@ -467,7 +338,7 @@
 
     </main>
 
-    <!-- MODALS -->
+    <!-- MODAL BANQUE D'ACTIVITÉS -->
     <div id="modal-activity-bank" class="modal hidden">
         <div class="modal-content">
             <span class="close-modal" onclick="closeActivityBankModal()">&times;</span>
@@ -490,6 +361,7 @@
         </div>
     </div>
 
+    <!-- MODAL BILAN -->
     <div id="modal-bilan" class="modal hidden">
         <div class="modal-content">
             <span class="close-modal" onclick="closeBilanModal()">&times;</span>
@@ -500,6 +372,7 @@
         </div>
     </div>
 
+    <!-- MODAL CREATION MODULE -->
     <div id="modal-add-module" class="modal hidden">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAddModuleModal()">&times;</span>
@@ -535,6 +408,7 @@
         </div>
     </div>
 
+    <!-- MODAL CREATION CRENEAU HORAIRE -->
     <div id="modal-add-slot" class="modal hidden">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAddSlotModal()">&times;</span>
@@ -555,6 +429,7 @@
         </div>
     </div>
 
+    <!-- MODAL CREATION TÂCHE PERSO -->
     <div id="modal-add-task" class="modal hidden">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAddTaskModal()">&times;</span>
@@ -583,741 +458,6 @@
         </div>
     </div>
 
-    <script>
-        // PALETTE PASTELS D'ORIGINE
-        const PASTEL_PALETTE = [
-            { name: "Rose Poudré", hex: "#FDE2E4" },
-            { name: "Menthe Douce", hex: "#D1F2D9" },
-            { name: "Lavande Pastel", hex: "#E2D4F9" },
-            { name: "Citron Glacé", hex: "#FFF1C5" },
-            { name: "Ciel Pastel", hex: "#B9F3FC" },
-            { name: "Pêche Douce", hex: "#FFD8BE" },
-            { name: "Sauge Pastel", hex: "#E8F5E9" },
-            { name: "Lilas Doux", hex: "#F7C8E0" },
-            { name: "Bleu Pervenche", hex: "#D6E4FF" },
-            { name: "Beige Vanille", hex: "#F5EBE0" }
-        ];
-
-        let appData = {
-            modules: [],
-            timeSlots: [
-                { id: 1, start: "08:00", end: "09:30" },
-                { id: 2, start: "09:30", end: "11:00" },
-                { id: 3, start: "11:00", end: "12:30" },
-                { id: 4, start: "14:00", end: "15:30" },
-                { id: 5, start: "15:30", end: "17:00" },
-                { id: 6, start: "17:00", end: "18:30" },
-                { id: 7, start: "20:00", end: "21:30" },
-                { id: 8, start: "21:30", end: "23:00" },
-                { id: 9, start: "23:00", end: "00:30" },
-                { id: 10, start: "00:30", end: "02:00" }
-            ],
-            savedActivities: [
-                { id: 1, title: "Cours Université", color: "#E2D4F9" },
-                { id: 2, title: "Séance Gym", color: "#D1F2D9" },
-                { id: 3, title: "Session Peinture", color: "#FFD8BE" }
-            ],
-            timetable: {},
-            customTasks: [
-                { id: 1, name: "Ranger ma chambre & bureau", energy: "low", duration: "20min" },
-                { id: 2, name: "Session Peinture / Dessin", energy: "medium", duration: "1h" },
-                { id: 3, name: "Séance de Gym / Sport", energy: "high", duration: "1h20min" }
-            ],
-            pomodoroHistory: [],
-            pomodoroConfig: {
-                workMin: 25,
-                shortBreakMin: 5,
-                longBreakMin: 15,
-                cyclesBeforeLong: 4,
-                soundWork: 'bell',
-                soundShort: 'marimba',
-                soundLong: 'gong'
-            },
-            githubConfig: { token: '', repo: '' },
-            currentTheme: 'dopamine-pastel'
-        };
-
-        let timerInterval = null;
-        let timerSecondsLeft = 25 * 60;
-        let isTimerRunning = false;
-        let currentMode = 'work';
-        let currentCycle = 1;
-        let selectedModuleIdForPomo = null;
-        let activeDetailModuleId = null;
-
-        function parseFlexibleTime(input) {
-            if (!input) return 25;
-            let str = input.toString().toLowerCase().trim();
-            let totalMinutes = 0;
-            let hoursMatch = str.match(/(\d+(?:\.\d+)?)\s*h/);
-            let minsMatch = str.match(/(\d+)\s*m/);
-
-            if (hoursMatch) {
-                totalMinutes += parseFloat(hoursMatch[1]) * 60;
-                let afterH = str.split('h')[1];
-                if (afterH) {
-                    let mAfter = afterH.match(/(\d+)/);
-                    if (mAfter) totalMinutes += parseInt(mAfter[1]);
-                }
-            } else if (minsMatch) {
-                totalMinutes += parseInt(minsMatch[1]);
-            } else {
-                let val = parseFloat(str);
-                if (!isNaN(val)) totalMinutes = val;
-            }
-            return totalMinutes > 0 ? Math.round(totalMinutes) : 25;
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            loadLocalData();
-            initNavigation();
-            initSwatches();
-            initEventListeners();
-            applyTheme(appData.currentTheme);
-            renderApp();
-        });
-
-        function loadLocalData() {
-            const saved = localStorage.getItem('focus_study_app_data');
-            if (saved) {
-                appData = JSON.parse(saved);
-                if (!appData.timeSlots) appData.timeSlots = [];
-                if (!appData.savedActivities) appData.savedActivities = [];
-                if (!appData.timetable) appData.timetable = {};
-                if (!appData.pomodoroHistory) appData.pomodoroHistory = [];
-                if (!appData.customTasks) appData.customTasks = [];
-            }
-        }
-
-        function saveData() {
-            localStorage.setItem('focus_study_app_data', JSON.stringify(appData));
-            if (appData.githubConfig && appData.githubConfig.token && appData.githubConfig.repo) {
-                pushToGitHub();
-            }
-        }
-
-        function initNavigation() {
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                    document.querySelectorAll('.tab-pane').forEach(tab => tab.classList.remove('active'));
-                    btn.classList.add('active');
-                    document.getElementById(btn.dataset.tab).classList.add('active');
-                });
-            });
-        }
-
-        function initSwatches() {
-            const bankContainer = document.getElementById('bank-pastel-swatches');
-            const modContainer = document.getElementById('module-pastel-swatches');
-            if (bankContainer) renderSwatchesInto(bankContainer, 'new-act-color');
-            if (modContainer) renderSwatchesInto(modContainer, 'new-mod-color');
-        }
-
-        function renderSwatchesInto(container, hiddenInputId) {
-            container.innerHTML = '';
-            PASTEL_PALETTE.forEach((p, idx) => {
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = `pastel-swatch-btn ${idx === 0 ? 'selected' : ''}`;
-                btn.style.backgroundColor = p.hex;
-                btn.title = p.name;
-                btn.onclick = () => {
-                    container.querySelectorAll('.pastel-swatch-btn').forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    document.getElementById(hiddenInputId).value = p.hex;
-                };
-                container.appendChild(btn);
-            });
-        }
-
-        function initEventListeners() {
-            document.getElementById('form-create-module').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const name = document.getElementById('new-mod-name').value;
-                const color = document.getElementById('new-mod-color').value || "#E2D4F9";
-                const td = parseInt(document.getElementById('new-mod-td').value) || 0;
-                const tp = parseInt(document.getElementById('new-mod-tp').value) || 0;
-                const chapCount = parseInt(document.getElementById('new-mod-chap').value) || 1;
-
-                const chapters = [];
-                for (let i = 1; i <= chapCount; i++) {
-                    chapters.push({ id: Date.now() + i, title: `Chapitre ${i}`, step1: false, step2: false, step3: false });
-                }
-
-                appData.modules.push({ id: Date.now(), name, color, tdCount: td, tdDone: 0, tpCount: tp, tpDone: 0, chapters, pomodoroMinutes: 0 });
-                saveData(); renderApp(); closeAddModuleModal();
-                document.getElementById('form-create-module').reset();
-            });
-
-            document.getElementById('form-add-slot').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const start = document.getElementById('slot-start').value.trim();
-                const end = document.getElementById('slot-end').value.trim();
-                appData.timeSlots.push({ id: Date.now(), start, end });
-                saveData(); renderTimetableGrid(); closeAddSlotModal();
-                document.getElementById('form-add-slot').reset();
-            });
-
-            document.getElementById('form-create-saved-activity').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const title = document.getElementById('new-act-name').value.trim();
-                const color = document.getElementById('new-act-color').value || "#FDE2E4";
-                appData.savedActivities.push({ id: Date.now(), title, color });
-                saveData(); renderSavedActivitiesList(); renderSavedActivitiesDropdown();
-                document.getElementById('form-create-saved-activity').reset();
-            });
-
-            document.getElementById('form-add-task').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const name = document.getElementById('task-name').value;
-                const energy = document.getElementById('task-energy').value;
-                const duration = document.getElementById('task-duration').value;
-
-                appData.customTasks.push({ id: Date.now(), name, energy, duration });
-                saveData(); renderTasksPinterest(); closeAddTaskModal();
-                document.getElementById('form-add-task').reset();
-            });
-
-            document.getElementById('form-github-sync').addEventListener('submit', (e) => {
-                e.preventDefault();
-                appData.githubConfig.token = document.getElementById('gh-token').value.trim();
-                appData.githubConfig.repo = document.getElementById('gh-repo').value.trim();
-                saveData(); alert('Identifiants sauvegardés !');
-            });
-
-            document.getElementById('btn-pomo-start').addEventListener('click', startPomodoro);
-            document.getElementById('btn-pomo-pause').addEventListener('click', pausePomodoro);
-            document.getElementById('btn-pomo-reset').addEventListener('click', resetPomodoro);
-            document.getElementById('pomo-module-select').addEventListener('change', (e) => {
-                selectedModuleIdForPomo = e.target.value ? parseInt(e.target.value) : null;
-            });
-        }
-
-        function renderApp() {
-            renderModulesHorizontal();
-            renderPomodoroSelect();
-            renderSavedActivitiesDropdown();
-            renderTimetableGrid();
-            renderTasksPinterest();
-            if (activeDetailModuleId) renderModuleDetail(activeDetailModuleId);
-        }
-
-        function renderModulesHorizontal() {
-            const list = document.getElementById('modules-horizontal-list');
-            list.innerHTML = '';
-            if (appData.modules.length === 0) {
-                list.innerHTML = '<p style="color:var(--text-muted)">Aucun module pour le moment. Cliquez sur "Nouveau Module".</p>';
-                return;
-            }
-            appData.modules.forEach(mod => {
-                let totalSteps = mod.chapters.length * 3;
-                let doneSteps = 0;
-                mod.chapters.forEach(c => {
-                    if (c.step1) doneSteps++;
-                    if (c.step2) doneSteps++;
-                    if (c.step3) doneSteps++;
-                });
-
-                const percent = totalSteps > 0 ? Math.round((doneSteps / totalSteps) * 100) : 0;
-                const hours = Math.floor(mod.pomodoroMinutes / 60);
-                const mins = mod.pomodoroMinutes % 60;
-                const timeStr = hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
-
-                const card = document.createElement('div');
-                card.className = `module-card-mini ${activeDetailModuleId === mod.id ? 'active-selected' : ''}`;
-                card.style.borderColor = mod.color;
-                card.style.backgroundColor = mod.color + "22";
-                card.onclick = () => toggleModuleDetail(mod.id);
-
-                card.innerHTML = `
-                    <div class="mod-header">
-                        <span class="mod-title">${mod.name}</span>
-                        <span class="mod-pomo-time">⏱️ ${timeStr}</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width:${percent}%"></div>
-                    </div>
-                    <p style="font-size:0.8rem; text-align:right; font-weight:bold">${percent}% complété</p>
-                `;
-                list.appendChild(card);
-            });
-        }
-
-        function toggleModuleDetail(id) {
-            if (activeDetailModuleId === id) {
-                activeDetailModuleId = null;
-                document.getElementById('module-detail-container').classList.add('hidden');
-            } else {
-                activeDetailModuleId = id;
-                renderModuleDetail(id);
-            }
-            renderModulesHorizontal();
-        }
-
-        function renderModuleDetail(id) {
-            const container = document.getElementById('module-detail-container');
-            const mod = appData.modules.find(m => m.id === id);
-            if (!mod) { container.classList.add('hidden'); return; }
-
-            container.classList.remove('hidden');
-            container.style.borderLeftColor = mod.color;
-            container.style.backgroundColor = mod.color + "15";
-
-            let chaptersHTML = '';
-            mod.chapters.forEach((chap) => {
-                const step1Done = chap.step1;
-                const step2Done = chap.step1 && chap.step2;
-
-                chaptersHTML += `
-                    <div class="chapter-box">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <input type="text" value="${chap.title}" onchange="updateChapterTitle(${mod.id}, ${chap.id}, this.value)" style="font-weight:bold; width:75%;">
-                            <button class="btn-danger" onclick="deleteChapter(${mod.id}, ${chap.id})" style="padding:4px 8px;">🗑️</button>
-                        </div>
-                        <div style="margin-top:10px;">
-                            <label class="step-item">
-                                <input type="checkbox" ${chap.step1 ? 'checked' : ''} onchange="toggleStep(${mod.id}, ${chap.id}, 'step1')">
-                                <span><strong>Étape 1 :</strong> Écouter / Noter l'audio</span>
-                            </label>
-
-                            <label class="step-item ${!step1Done ? 'disabled' : ''}">
-                                <input type="checkbox" ${chap.step2 ? 'checked' : ''} ${!step1Done ? 'disabled' : ''} onchange="toggleStep(${mod.id}, ${chap.id}, 'step2')">
-                                <span>${!step1Done ? '🔒 (Valider d\'abord l\'Étape 1)' : '<strong>Étape 2 :</strong> Comprendre le reste'}</span>
-                            </label>
-
-                            <label class="step-item ${!step2Done ? 'disabled' : ''}">
-                                <input type="checkbox" ${chap.step3 ? 'checked' : ''} ${!step2Done ? 'disabled' : ''} onchange="toggleStep(${mod.id}, ${chap.id}, 'step3')">
-                                <span>${!step2Done ? '🔒 (Valider d\'abord l\'Étape 2)' : '<strong>Étape 3 :</strong> Faire le résumé final'}</span>
-                            </label>
-                        </div>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                    <h2 style="color:var(--text);">${mod.name}</h2>
-                    <button class="btn-danger" onclick="deleteModule(${mod.id})">🗑️ Supprimer Module</button>
-                </div>
-                <p style="margin-bottom:15px; font-weight:bold;">📝 T.D : ${mod.tdDone}/${mod.tdCount} | 🧪 T.P : ${mod.tpDone}/${mod.tpCount}</p>
-                ${chaptersHTML}
-                <button class="btn-primary mt-20" onclick="addNewChapter(${mod.id})">➕ Ajouter Chapitre</button>
-            `;
-        }
-
-        function toggleStep(modId, chapId, stepKey) {
-            const mod = appData.modules.find(m => m.id === modId);
-            if (!mod) return;
-            const chap = mod.chapters.find(c => c.id === chapId);
-            if (!chap) return;
-
-            if (stepKey === 'step1') {
-                chap.step1 = !chap.step1;
-                if (!chap.step1) { chap.step2 = false; chap.step3 = false; }
-            } else if (stepKey === 'step2' && chap.step1) {
-                chap.step2 = !chap.step2;
-                if (!chap.step2) { chap.step3 = false; }
-            } else if (stepKey === 'step3' && chap.step1 && chap.step2) {
-                chap.step3 = !chap.step3;
-            }
-            saveData(); renderApp();
-        }
-
-        function updateChapterTitle(modId, chapId, title) {
-            const mod = appData.modules.find(m => m.id === modId);
-            if (mod) {
-                const chap = mod.chapters.find(c => c.id === chapId);
-                if (chap) { chap.title = title; saveData(); }
-            }
-        }
-
-        function addNewChapter(modId) {
-            const mod = appData.modules.find(m => m.id === modId);
-            if (mod) {
-                mod.chapters.push({ id: Date.now(), title: `Chapitre ${mod.chapters.length + 1}`, step1: false, step2: false, step3: false });
-                saveData(); renderApp();
-            }
-        }
-
-        function deleteChapter(modId, chapId) {
-            const mod = appData.modules.find(m => m.id === modId);
-            if (mod && confirm('Supprimer ce chapitre ?')) {
-                mod.chapters = mod.chapters.filter(c => c.id !== chapId);
-                saveData(); renderApp();
-            }
-        }
-
-        function deleteModule(modId) {
-            if (confirm('Supprimer définitivement ce module ?')) {
-                appData.modules = appData.modules.filter(m => m.id !== modId);
-                activeDetailModuleId = null;
-                saveData(); renderApp();
-            }
-        }
-
-        function renderSavedActivitiesDropdown() {
-            const sel = document.getElementById('assign-saved-activity');
-            if (!sel) return;
-            sel.innerHTML = '';
-            if (appData.savedActivities.length === 0) {
-                sel.innerHTML = '<option value="">-- Aucune activité enregistrée --</option>';
-                return;
-            }
-            appData.savedActivities.forEach(act => {
-                const opt = document.createElement('option');
-                opt.value = act.id;
-                opt.textContent = act.title;
-                sel.appendChild(opt);
-            });
-        }
-
-        function renderSavedActivitiesList() {
-            const list = document.getElementById('bank-activities-list');
-            if (!list) return;
-            list.innerHTML = '';
-            if (appData.savedActivities.length === 0) {
-                list.innerHTML = '<p style="font-size:0.85rem;">Aucune activité enregistrée.</p>';
-                return;
-            }
-            appData.savedActivities.forEach(act => {
-                const div = document.createElement('div');
-                div.className = 'bank-item';
-                div.style.backgroundColor = act.color + "55";
-                div.innerHTML = `
-                    <span>${act.title}</span>
-                    <button class="btn-danger btn-sm" onclick="deleteSavedActivity(${act.id})">🗑️</button>
-                `;
-                list.appendChild(div);
-            });
-        }
-
-        function deleteSavedActivity(id) {
-            appData.savedActivities = appData.savedActivities.filter(a => a.id !== id);
-            saveData(); renderSavedActivitiesList(); renderSavedActivitiesDropdown();
-        }
-
-        function renderTimetableGrid() {
-            const tbody = document.getElementById('timetable-body');
-            const slotSelect = document.getElementById('assign-slot');
-            if (!tbody || !slotSelect) return;
-
-            tbody.innerHTML = '';
-            slotSelect.innerHTML = '';
-
-            const days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
-
-            appData.timeSlots.forEach(slot => {
-                const opt = document.createElement('option');
-                opt.value = slot.id;
-                opt.textContent = `${slot.start} - ${slot.end}`;
-                slotSelect.appendChild(opt);
-
-                const tr = document.createElement('tr');
-                const tdTime = document.createElement('td');
-                tdTime.className = 'time-slot-label';
-                tdTime.textContent = `${slot.start} - ${slot.end}`;
-                tr.appendChild(tdTime);
-
-                days.forEach(day => {
-                    const tdCell = document.createElement('td');
-                    tdCell.className = 'cell-slot';
-                    const key = `${day}-${slot.id}`;
-                    const taskData = appData.timetable[key];
-
-                    if (taskData) {
-                        tdCell.innerHTML = `<span class="slot-badge" style="background-color:${taskData.color}">${taskData.title}</span>`;
-                    }
-
-                    tdCell.onclick = () => assignFromCellClick(day, slot.id);
-                    tr.appendChild(tdCell);
-                });
-
-                const tdAction = document.createElement('td');
-                tdAction.innerHTML = `<button class="btn-danger btn-sm" onclick="deleteTimeSlot(${slot.id})">❌</button>`;
-                tr.appendChild(tdAction);
-
-                tbody.appendChild(tr);
-            });
-        }
-
-        function assignFromCellClick(day, slotId) {
-            if (appData.savedActivities.length === 0) {
-                const title = prompt(`Nom de l'activité pour ${day} :`);
-                if (title) {
-                    appData.timetable[`${day}-${slotId}`] = { title, color: "#FDE2E4" };
-                    saveData(); renderTimetableGrid();
-                }
-                return;
-            }
-            const actId = document.getElementById('assign-saved-activity').value;
-            const act = appData.savedActivities.find(a => a.id == actId) || appData.savedActivities[0];
-            if (act) {
-                appData.timetable[`${day}-${slotId}`] = { title: act.title, color: act.color };
-                saveData(); renderTimetableGrid();
-            }
-        }
-
-        function assignTaskFromBar() {
-            const actId = document.getElementById('assign-saved-activity').value;
-            const day = document.getElementById('assign-day').value;
-            const slotId = document.getElementById('assign-slot').value;
-
-            const act = appData.savedActivities.find(a => a.id == actId);
-            if (!act) { alert('Veuillez d\'abord ajouter une activité à votre banque d\'activités.'); return; }
-
-            appData.timetable[`${day}-${slotId}`] = { title: act.title, color: act.color };
-            saveData(); renderTimetableGrid();
-        }
-
-        function clearSelectedSlotFromBar() {
-            const day = document.getElementById('assign-day').value;
-            const slotId = document.getElementById('assign-slot').value;
-            delete appData.timetable[`${day}-${slotId}`];
-            saveData(); renderTimetableGrid();
-        }
-
-        function deleteTimeSlot(slotId) {
-            if (confirm('Supprimer ce créneau horaire du tableau ?')) {
-                appData.timeSlots = appData.timeSlots.filter(s => s.id !== slotId);
-                saveData(); renderTimetableGrid();
-            }
-        }
-
-        function renderPomodoroSelect() {
-            const sel = document.getElementById('pomo-module-select');
-            sel.innerHTML = '<option value="">-- Session libre / Aucun module --</option>';
-            appData.modules.forEach(m => {
-                const opt = document.createElement('option');
-                opt.value = m.id; opt.textContent = m.name;
-                if (selectedModuleIdForPomo === m.id) opt.selected = true;
-                sel.appendChild(opt);
-            });
-        }
-
-        function applyPomodoroConfig() {
-            appData.pomodoroConfig.workMin = parseFlexibleTime(document.getElementById('cfg-pomo-work').value);
-            appData.pomodoroConfig.shortBreakMin = parseFlexibleTime(document.getElementById('cfg-pomo-short').value);
-            appData.pomodoroConfig.longBreakMin = parseFlexibleTime(document.getElementById('cfg-pomo-long').value);
-            appData.pomodoroConfig.cyclesBeforeLong = parseInt(document.getElementById('cfg-pomo-cycles').value) || 4;
-            appData.pomodoroConfig.soundWork = document.getElementById('sound-work').value;
-            appData.pomodoroConfig.soundShort = document.getElementById('sound-short').value;
-            appData.pomodoroConfig.soundLong = document.getElementById('sound-long').value;
-
-            saveData(); resetPomodoro(); alert('Réglages Pomodoro enregistrés !');
-        }
-
-        function playSound(type) {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.connect(gain); gain.connect(ctx.destination);
-
-                if (type === 'bell') {
-                    osc.frequency.setValueAtTime(587.33, ctx.currentTime);
-                    gain.gain.setValueAtTime(0.5, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5);
-                    osc.start(); osc.stop(ctx.currentTime + 1.5);
-                } else if (type === 'beep') {
-                    osc.type = 'square'; osc.frequency.setValueAtTime(800, ctx.currentTime);
-                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-                    osc.start(); osc.stop(ctx.currentTime + 0.3);
-                } else if (type === 'gong') {
-                    osc.frequency.setValueAtTime(261.63, ctx.currentTime);
-                    gain.gain.setValueAtTime(0.6, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 2.5);
-                    osc.start(); osc.stop(ctx.currentTime + 2.5);
-                } else if (type === 'marimba') {
-                    osc.type = 'triangle'; osc.frequency.setValueAtTime(440, ctx.currentTime);
-                    gain.gain.setValueAtTime(0.5, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
-                    osc.start(); osc.stop(ctx.currentTime + 0.6);
-                } else if (type === 'chime') {
-                    osc.type = 'sine'; osc.frequency.setValueAtTime(880, ctx.currentTime);
-                    gain.gain.setValueAtTime(0.4, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
-                    osc.start(); osc.stop(ctx.currentTime + 1.2);
-                }
-            } catch(e) { console.log('Audio error:', e); }
-        }
-
-        function testSound(elementId) { playSound(document.getElementById(elementId).value); }
-
-        function startPomodoro() {
-            if (isTimerRunning) return;
-            isTimerRunning = true;
-            timerInterval = setInterval(() => {
-                if (timerSecondsLeft > 0) {
-                    timerSecondsLeft--; updateClockDisplay();
-                } else {
-                    handleTimerCompletion();
-                }
-            }, 1000);
-        }
-
-        function pausePomodoro() { clearInterval(timerInterval); isTimerRunning = false; }
-        function resetPomodoro() {
-            pausePomodoro(); currentMode = 'work';
-            timerSecondsLeft = appData.pomodoroConfig.workMin * 60;
-            updateClockDisplay();
-            document.getElementById('timer-status').textContent = "Session de Travail";
-        }
-
-        function handleTimerCompletion() {
-            pausePomodoro();
-            const todayStr = new Date().toLocaleDateString('fr-FR');
-            const mod = appData.modules.find(m => m.id === selectedModuleIdForPomo);
-            const modName = mod ? mod.name : 'Session Libre';
-
-            if (currentMode === 'work') {
-                playSound(appData.pomodoroConfig.soundWork || 'bell');
-                const minsWorked = appData.pomodoroConfig.workMin;
-                if (mod) { mod.pomodoroMinutes += minsWorked; }
-
-                appData.pomodoroHistory.push({ id: Date.now(), date: todayStr, moduleName: modName, minutes: minsWorked });
-                saveData(); renderModulesHorizontal();
-
-                if (currentCycle % appData.pomodoroConfig.cyclesBeforeLong === 0) {
-                    currentMode = 'longBreak'; timerSecondsLeft = appData.pomodoroConfig.longBreakMin * 60;
-                    document.getElementById('timer-status').textContent = "Pause Longue ! ☕";
-                } else {
-                    currentMode = 'shortBreak'; timerSecondsLeft = appData.pomodoroConfig.shortBreakMin * 60;
-                    document.getElementById('timer-status').textContent = "Pause Courte ! ☕";
-                }
-                currentCycle++;
-            } else {
-                playSound(currentMode === 'shortBreak' ? appData.pomodoroConfig.soundShort : appData.pomodoroConfig.soundLong);
-                currentMode = 'work'; timerSecondsLeft = appData.pomodoroConfig.workMin * 60;
-                document.getElementById('timer-status').textContent = "Session de Travail";
-            }
-            document.getElementById('timer-cycles').textContent = `Cycle ${currentCycle}`;
-            updateClockDisplay(); alert('Temps écoulé !');
-        }
-
-        function updateClockDisplay() {
-            const mins = Math.floor(timerSecondsLeft / 60);
-            const secs = timerSecondsLeft % 60;
-            document.getElementById('timer-time').textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
-
-        function openBilanModal() {
-            const modal = document.getElementById('modal-bilan');
-            const summary = document.getElementById('bilan-stats-summary');
-            const list = document.getElementById('bilan-history-list');
-
-            let totalMins = 0;
-            appData.pomodoroHistory.forEach(h => totalMins += h.minutes);
-            summary.innerHTML = `🏆 **Total Étudié :** ${(totalMins/60).toFixed(1)}h (${totalMins} min) | **${appData.pomodoroHistory.length} Sessions**`;
-
-            list.innerHTML = '';
-            if (appData.pomodoroHistory.length === 0) {
-                list.innerHTML = '<p>Aucune session enregistrée.</p>';
-            } else {
-                appData.pomodoroHistory.slice().reverse().forEach(h => {
-                    list.innerHTML += `<div style="padding:8px; border-bottom:1px solid var(--border);">📅 <strong>${h.date}</strong> - ${h.moduleName} : ⏱️ ${h.minutes} min</div>`;
-                });
-            }
-            modal.classList.remove('hidden');
-        }
-
-        function closeBilanModal() { document.getElementById('modal-bilan').classList.add('hidden'); }
-
-        function renderTasksPinterest() {
-            const grid = document.getElementById('tasks-pinterest-grid');
-            if (!grid) return;
-            grid.innerHTML = '';
-            appData.customTasks.forEach(t => {
-                const card = document.createElement('div');
-                card.className = 'pinterest-card';
-                card.innerHTML = `
-                    <span class="pinterest-card-tag">Énergie ${t.energy}</span>
-                    <h3>${t.name}</h3>
-                    <p style="margin-top:6px; font-weight:bold; color:var(--primary)">⏱️ Durée : ${t.duration}</p>
-                    <button class="btn-danger" style="margin-top:10px; padding:4px 8px;" onclick="deleteCustomTask(${t.id})">🗑️ Supprimer</button>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function deleteCustomTask(id) { appData.customTasks = appData.customTasks.filter(t => t.id !== id); saveData(); renderTasksPinterest(); }
-
-        function calculateUltimateTask() {
-            const energy = document.getElementById('rec-energy').value;
-            const timeStr = document.getElementById('rec-time').value;
-            const timeMins = parseFlexibleTime(timeStr);
-            const box = document.getElementById('ultimate-task-result');
-
-            const matching = appData.customTasks.filter(t => t.energy === energy && parseFlexibleTime(t.duration) <= timeMins);
-
-            let html = `<h3>🚀 Recommandation suggérée :</h3>`;
-            if (matching.length > 0) {
-                const best = matching[Math.floor(Math.random() * matching.length)];
-                html += `<p class="mt-20"><strong>${best.name}</strong> (${best.duration})</p>`;
-            } else {
-                html += `<p class="mt-20">Réviser ${timeMins} min de l'Étape 1 ou 2 d'un de vos modules d'études.</p>`;
-            }
-            box.innerHTML = html; box.classList.remove('hidden');
-        }
-
-        function setTheme(name) { appData.currentTheme = name; applyTheme(name); saveData(); }
-        function applyTheme(name) { document.body.className = `theme-${name}`; }
-
-        function openAddModuleModal() { document.getElementById('modal-add-module').classList.remove('hidden'); }
-        function closeAddModuleModal() { document.getElementById('modal-add-module').classList.add('hidden'); }
-        function openAddSlotModal() { document.getElementById('modal-add-slot').classList.remove('hidden'); }
-        function closeAddSlotModal() { document.getElementById('modal-add-slot').classList.add('hidden'); }
-        function openAddTaskModal() { document.getElementById('modal-add-task').classList.remove('hidden'); }
-        function closeAddTaskModal() { document.getElementById('modal-add-task').classList.add('hidden'); }
-        function openActivityBankModal() { renderSavedActivitiesList(); document.getElementById('modal-activity-bank').classList.remove('hidden'); }
-        function closeActivityBankModal() { document.getElementById('modal-activity-bank').classList.add('hidden'); }
-
-        function exportDataJSON() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
-            const dl = document.createElement('a'); dl.setAttribute("href", dataStr); dl.setAttribute("download", "focus_backup.json");
-            document.body.appendChild(dl); dl.click(); dl.remove();
-        }
-
-        function importDataJSON(e) {
-            const file = e.target.files[0]; if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                try { appData = JSON.parse(evt.target.result); saveData(); renderApp(); alert('Données importées avec succès !'); } catch(err) { alert('Fichier JSON invalide.'); }
-            };
-            reader.readAsText(file);
-        }
-
-        async function pushToGitHub() {
-            const { token, repo } = appData.githubConfig; if (!token || !repo) return;
-            const url = `https://api.github.com/repos/${repo}/contents/data.json`;
-            const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(appData, null, 2))));
-            try {
-                let sha = null;
-                const getRes = await fetch(url, { headers: { 'Authorization': `token ${token}` } });
-                if (getRes.ok) { const fileData = await getRes.json(); sha = fileData.sha; }
-                await fetch(url, {
-                    method: 'PUT',
-                    headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: 'Update FocusStudy Data', content: contentBase64, sha: sha })
-                });
-            } catch (err) { console.error('GitHub Push Error:', err); }
-        }
-
-        async function pullFromGitHub() {
-            const { token, repo } = appData.githubConfig;
-            if (!token || !repo) { alert('Renseignez d\'abord vos identifiants GitHub.'); return; }
-            const url = `https://api.github.com/repos/${repo}/contents/data.json`;
-            try {
-                const res = await fetch(url, { headers: { 'Authorization': `token ${token}` } });
-                if (res.ok) {
-                    const data = await res.json();
-                    const decoded = decodeURIComponent(escape(atob(data.content)));
-                    appData = JSON.parse(decoded);
-                    localStorage.setItem('focus_study_app_data', JSON.stringify(appData));
-                    applyTheme(appData.currentTheme || 'dopamine-pastel'); renderApp(); alert('Données synchronisées depuis GitHub !');
-                }
-            } catch (err) { alert('Erreur Pull GitHub: ' + err.message); }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
