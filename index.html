@@ -148,12 +148,12 @@
             </div>
         </section>
 
-        <!-- ONGLET CONFIGURATION GITHUB ET EXPORT -->
+      <!-- ONGLET CONFIGURATION GITHUB ET EXPORT -->
         <section id="tab-config" class="tab-pane">
             <div class="grid-2">
                 <div class="card">
                     <h2>⚙️ Synchronisation GitHub</h2>
-                    <form id="form-github-sync" class="mt-15">
+                    <form id="form-github-sync" class="mt-15" onsubmit="event.preventDefault(); pushToGitHub();">
                         <div class="input-group">
                             <label for="gh-token">GitHub Token :</label>
                             <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx">
@@ -163,9 +163,8 @@
                             <input type="text" id="gh-repo" value="abbassiwissal/FocusStudy">
                         </div>
                         <div class="btn-group-row mt-15">
-                            <button type="submit" class="btn-primary">Enregistrer</button>
+                            <button type="submit" class="btn-action-pink">📤 Enregistrer & Push</button>
                             <button type="button" class="btn-action-purple" onclick="pullFromGitHub()">📥 Pull</button>
-                            <button type="button" class="btn-action-pink" onclick="pushToGitHub()">📤 Push</button>
                         </div>
                     </form>
                 </div>
