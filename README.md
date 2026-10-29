@@ -1,1 +1,1 @@
-# Study.app
+# FocusStudy
