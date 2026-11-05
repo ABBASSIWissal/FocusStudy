@@ -1,466 +1,501 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FocusStudy</title>
-    <!-- Import de la police moderne Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        /* THÈMES ET PALETTES PASTELS */
-        body.theme-dopamine-pastel { 
-            --primary: #8C7CE6; 
-            --accent: #FFB7B2; 
-            --bg: #EAE6F7; 
-            --card-bg: #FFFFFF; 
-            --text: #2D3436; 
-            --border: #E0D7F5; 
-            --header-bg: #E3D7FF; 
-        }
+// --- DONNÉES & LOCALSTORAGE ---
+let appData = {
+  modules: JSON.parse(localStorage.getItem('study_modules')) || [],
+  planning: JSON.parse(localStorage.getItem('study_planning')) || [],
+  timeSlots: JSON.parse(localStorage.getItem('study_timeSlots')) || [],
+  savedActivities: JSON.parse(localStorage.getItem('study_savedActivities')) || [],
+  timetable: JSON.parse(localStorage.getItem('study_timetable')) || {}
+};
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', system-ui, sans-serif; }
-        body { background: var(--bg); color: var(--text); padding-bottom: 50px; transition: background 0.3s ease; }
+function saveData() {
+  localStorage.setItem('study_modules', JSON.stringify(appData.modules));
+  localStorage.setItem('study_planning', JSON.stringify(appData.planning));
+  localStorage.setItem('study_timeSlots', JSON.stringify(appData.timeSlots || []));
+  localStorage.setItem('study_savedActivities', JSON.stringify(appData.savedActivities || []));
+  localStorage.setItem('study_timetable', JSON.stringify(appData.timetable || {}));
+  updateGlobalStats();
+}
 
-        /* HEADER IDENTIQUE À LA PHOTO */
-        header { 
-            background: var(--header-bg); 
-            padding: 2rem 2rem 2.5rem 2rem; 
-        }
-        .header-container { 
-            max-width: 1100px; 
-            margin: 0 auto; 
-            display: flex; 
-            flex-direction: column;
-            gap: 20px; 
-        }
-        .logo { 
-            font-size: 2.2rem; 
-            font-weight: 900; 
-            color: #2D3436; 
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            letter-spacing: -0.5px;
-        }
-        .logo::before {
-            content: "⚡";
-            font-size: 2rem;
-        }
+// Navigation entre les onglets
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+  
+  const targetTab = document.getElementById(`tab-${tabId}`);
+  if (targetTab) targetTab.classList.add('active');
+  
+  if (event && event.target) {
+    event.target.classList.add('active');
+  }
 
-        /* NAVIGATION EN PILULES ROUNDED */
-        .main-nav { 
-            display: flex; 
-            gap: 12px; 
-            flex-wrap: wrap; 
-        }
-        .nav-btn { 
-            background: rgba(255, 255, 255, 0.75); 
-            border: none; 
-            color: #2D3436; 
-            padding: 10px 22px; 
-            border-radius: 50px; 
-            cursor: pointer; 
-            font-weight: 700; 
-            font-size: 0.95rem; 
-            transition: all 0.2s ease; 
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-        }
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.95);
-            transform: translateY(-1px);
-        }
-        .nav-btn.active { 
-            background: #FFFFFF; 
-            color: #2D3436; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
-        }
+  if (tabId === 'pomodoro') updatePomodoroDropdown();
+  if (tabId === 'config') loadSyncCredentials();
+}
 
-        /* CARTE PRINCIPALE BLANCHE ARRONDI */
-        .main-content { max-width: 1100px; margin: -10px auto 0 auto; padding: 0 20px; }
-        .tab-pane { display: none; }
-        .tab-pane.active { display: block; }
-        .card { 
-            background: var(--card-bg); 
-            border-radius: 24px; 
-            padding: 32px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04); 
-            margin-bottom: 20px; 
-        }
+function toggleForm(formId) {
+  const form = document.getElementById(formId);
+  if (form) {
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  }
+}
 
-        /* TITRE PRINCIPAL */
-        .page-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #2D3436;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
-            line-height: 1.3;
-        }
+// --- SÉLECTION DE PALETTE PASTEL ---
+function initPastelPalette() {
+  const swatches = document.querySelectorAll('#pastel-palette .swatch');
+  swatches.forEach(swatch => {
+    swatch.addEventListener('click', () => {
+      swatches.forEach(s => s.classList.remove('selected'));
+      swatch.classList.add('selected');
+      const colorInput = document.getElementById('mod-color');
+      if (colorInput) {
+        colorInput.value = swatch.getAttribute('data-color');
+      }
+    });
+  });
+}
 
-        /* BARRE DE BOUTONS (Créer Horaire / Banque Activités) */
-        .btn-group-row { display: flex; gap: 14px; flex-wrap: wrap; }
-        .btn-action-pink {
-            background-color: #FFB7B2;
-            color: #2D3436;
-            border: none;
-            padding: 12px 22px;
-            border-radius: 14px;
-            font-weight: 800;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: transform 0.15s, opacity 0.15s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-action-purple {
-            background-color: #8C7CE6;
-            color: #FFFFFF;
-            border: none;
-            padding: 12px 22px;
-            border-radius: 14px;
-            font-weight: 800;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: transform 0.15s, opacity 0.15s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-action-pink:hover, .btn-action-purple:hover { opacity: 0.92; transform: translateY(-1px); }
+// --- GESTION DES MODULES ---
+function createModule() {
+  const nameInput = document.getElementById('mod-title');
+  const name = nameInput ? nameInput.value.trim() : '';
+  const color = document.getElementById('mod-color')?.value || '#A7F3D0';
+  const tp = parseInt(document.getElementById('mod-tp')?.value) || 0;
+  const td = parseInt(document.getElementById('mod-td')?.value) || 0;
 
-        /* ASSIGN BAR & GRILLE PLANNING */
-        .schedule-assign-bar { 
-            background: #F8F5FF; 
-            padding: 20px; 
-            border-radius: 16px; 
-            border: 1px solid var(--border); 
-            margin-top: 20px;
-        }
-        .schedule-assign-bar h3 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; }
-        .form-row { display: flex; gap: 12px; flex-wrap: wrap; }
-        .input-group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 150px; }
-        .input-group label { font-size: 0.85rem; font-weight: 700; color: #636E72; }
-        select, input[type="text"], input[type="number"] { 
-            padding: 10px 14px; 
-            border: 1px solid #E2D9F3; 
-            background: white; 
-            border-radius: 10px; 
-            font-size: 0.9rem; 
-            font-weight: 600;
-            outline: none; 
-        }
+  if (!name) return alert('Veuillez entrer un nom de module.');
 
-        .timetable-scroll-box { overflow-x: auto; border-radius: 14px; border: 1px solid var(--border); margin-top: 20px; }
-        .timetable-grid { width: 100%; border-collapse: collapse; min-width: 850px; background: white; }
-        .timetable-grid th { background: #F8F5FF; padding: 14px; font-size: 0.9rem; font-weight: 800; border: 1px solid var(--border); text-align: center; }
-        .timetable-grid td { border: 1px solid var(--border); height: 58px; text-align: center; font-size: 0.85rem; vertical-align: middle; padding: 4px; }
-        .time-slot-label { font-weight: 800; background: #F8F5FF; width: 120px; }
-        .cell-slot { cursor: pointer; }
-        .cell-slot:hover { background: #F0EAFF; }
-        .slot-badge { padding: 8px 10px; border-radius: 10px; font-weight: 700; color: #2D3436; font-size: 0.85rem; display: block; }
+  const newModule = {
+    id: Date.now(),
+    name: name,
+    color: color,
+    tpCount: tp,
+    tdCount: td,
+    collapsed: false,
+    chapters: []
+  };
 
-        /* MODALS ET COMPOSANTS MASQUÉS */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); display:flex; justify-content:center; align-items:center; z-index:1000; }
-        .modal-content { background:white; padding:25px; border-radius:20px; width:90%; max-width:480px; position:relative; }
-        .close-modal { position:absolute; top:15px; right:20px; font-size:1.5rem; cursor:pointer; }
-        .hidden { display: none !important; }
-        .btn-sm { padding: 4px 10px; font-size: 0.8rem; border-radius: 8px; border:none; cursor:pointer; }
-        .btn-danger { background: #E57373; color: white; }
-        .btn-primary { background: #8C7CE6; color: white; border:none; padding:10px 18px; border-radius:10px; font-weight:700; cursor:pointer; }
-    </style>
-</head>
-<body class="theme-dopamine-pastel">
+  appData.modules.push(newModule);
+  saveData();
+  renderModules();
+  if (nameInput) nameInput.value = '';
+  toggleForm('form-add-module');
+}
 
-    <!-- En-tête identique au design visuel -->
-    <header>
-        <div class="header-container">
-            <h1 class="logo">FocusStudy</h1>
-            <nav class="main-nav">
-                <button class="nav-btn" data-tab="tab-modules">📖 Modules</button>
-                <button class="nav-btn" data-tab="tab-pomodoro">⏱️ Pomodoro</button>
-                <button class="nav-btn" data-tab="tab-recommendations">🧠 Recommandations</button>
-                <button class="nav-btn active" data-tab="tab-planning">📅 Planning Hebdo</button>
-                <button class="nav-btn" data-tab="tab-tasks">📝 Tâches Perso</button>
-                <button class="nav-btn" data-tab="tab-themes">🎨 Thèmes</button>
-                <button class="nav-btn" data-tab="tab-config">⚙️ Configuration</button>
-            </nav>
+function deleteModule(modId) {
+  if (confirm('Voulez-vous vraiment supprimer ce module ?')) {
+    appData.modules = appData.modules.filter(m => m.id !== modId);
+    saveData();
+    renderModules();
+  }
+}
+
+// Cliquer sur le module pour le réduire ou le ré-ouvrir
+function toggleModuleCollapse(modId) {
+  const mod = appData.modules.find(m => m.id === modId);
+  if (mod) {
+    mod.collapsed = !mod.collapsed;
+    saveData();
+    renderModules();
+  }
+}
+
+function moveModule(index, direction, evt) {
+  if (evt) evt.stopPropagation();
+  const newIndex = index + direction;
+  if (newIndex < 0 || newIndex >= appData.modules.length) return;
+  const temp = appData.modules[index];
+  appData.modules[index] = appData.modules[newIndex];
+  appData.modules[newIndex] = temp;
+  saveData();
+  renderModules();
+}
+
+// --- CHAPITRES & ÉTAPES (3 ÉTAPES) ---
+function addChapter(modId) {
+  const title = prompt('Titre du chapitre :');
+  if (!title) return;
+
+  const mod = appData.modules.find(m => m.id === modId);
+  if (mod) {
+    mod.chapters.push({
+      id: Date.now(),
+      title: title,
+      steps: [
+        { id: 1, label: "1. Écouter / noter l'audio", done: false },
+        { id: 2, label: "2. Comprendre le reste", done: false },
+        { id: 3, label: "3. Faire un résumé", done: false }
+      ]
+    });
+    saveData();
+    renderModules();
+  }
+}
+
+function deleteChapter(modId, chapId) {
+  const mod = appData.modules.find(m => m.id === modId);
+  if (mod) {
+    mod.chapters = mod.chapters.filter(c => c.id !== chapId);
+    saveData();
+    renderModules();
+  }
+}
+
+function toggleStep(modId, chapId, stepId) {
+  const mod = appData.modules.find(m => m.id === modId);
+  if (mod) {
+    const chap = mod.chapters.find(c => c.id === chapId);
+    if (chap) {
+      const step = chap.steps.find(s => s.id === stepId);
+      if (step) step.done = !step.done;
+      saveData();
+      renderModules();
+    }
+  }
+}
+
+function renderModules() {
+  const container = document.getElementById('modules-list');
+  if (!container) return;
+  container.innerHTML = '';
+
+  if (!appData.modules || appData.modules.length === 0) {
+    container.innerHTML = '<p style="color: var(--text-muted);">Aucun module ajouté pour le moment.</p>';
+    return;
+  }
+
+  appData.modules.forEach((mod, index) => {
+    const card = document.createElement('div');
+    card.className = `module-card ${mod.collapsed ? 'collapsed' : ''}`;
+    card.style.borderLeftColor = mod.color || '#6366f1';
+
+    let chaptersHTML = (mod.chapters || []).map(chap => `
+      <div class="chapter-item">
+        <div class="chapter-header">
+          <span>📖 ${chap.title}</span>
+          <button class="btn btn-danger btn-small" onclick="deleteChapter(${mod.id}, ${chap.id})">✕</button>
         </div>
-    </header>
+        <ul class="steps-list">
+          ${(chap.steps || []).map(step => `
+            <li class="step-item ${step.done ? 'completed' : ''}">
+              <input type="checkbox" ${step.done ? 'checked' : ''} onchange="toggleStep(${mod.id}, ${chap.id}, ${step.id})">
+              <span>${step.label}</span>
+            </li>
+          `).join('')}
+        </ul>
+      </div>
+    `).join('');
 
-    <main class="main-content">
-
-        <!-- ONGLET PLANNING HEBDO -->
-        <section id="tab-planning" class="tab-pane active">
-            <div class="card">
-                <h2 class="page-title">📅 Emploi du Temps Hebdomadaire sur Mesure</h2>
-                
-                <div class="btn-group-row">
-                    <button class="btn-action-pink" onclick="openAddSlotModal()">⏰ Créer un Horaire</button>
-                    <button class="btn-action-purple" onclick="openActivityBankModal()">⭐ Banque d'Activités</button>
-                </div>
-
-                <!-- Barre d'affectation d'activités -->
-                <div class="schedule-assign-bar">
-                    <h3>📌 Placer une activité enregistrée dans le tableau :</h3>
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Activité enregistrée :</label>
-                            <select id="assign-saved-activity"></select>
-                        </div>
-                        <div class="input-group">
-                            <label>Jour :</label>
-                            <select id="assign-day">
-                                <option value="Lundi">Lundi</option>
-                                <option value="Mardi">Mardi</option>
-                                <option value="Mercredi">Mercredi</option>
-                                <option value="Jeudi">Jeudi</option>
-                                <option value="Vendredi">Vendredi</option>
-                                <option value="Samedi">Samedi</option>
-                                <option value="Dimanche">Dimanche</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label>Horaire :</label>
-                            <select id="assign-slot"></select>
-                        </div>
-                    </div>
-
-                    <div style="margin-top:15px; display:flex; gap:10px;">
-                        <button class="btn-primary" onclick="assignTaskFromBar()">📌 Placer dans la case</button>
-                        <button class="btn-danger btn-sm" style="padding:10px 16px; font-weight:700;" onclick="clearSelectedSlotFromBar()">🗑️ Vider le créneau</button>
-                    </div>
-                </div>
-
-                <!-- Grille du Planning -->
-                <div class="timetable-scroll-box">
-                    <table class="timetable-grid">
-                        <thead>
-                            <tr>
-                                <th>Horaires</th>
-                                <th>Lundi</th>
-                                <th>Mardi</th>
-                                <th>Mercredi</th>
-                                <th>Jeudi</th>
-                                <th>Vendredi</th>
-                                <th>Samedi</th>
-                                <th>Dimanche</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="timetable-body"></tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- AUTRES ONGLETS (Modules, Pomodoro, etc.) -->
-        <section id="tab-modules" class="tab-pane"><div class="card"><h2>📖 Modules d'Études</h2></div></section>
-        <section id="tab-pomodoro" class="tab-pane"><div class="card"><h2>⏱️ Minuteur Pomodoro</h2></div></section>
-        <section id="tab-recommendations" class="tab-pane"><div class="card"><h2>🧠 Recommandations</h2></div></section>
-        <section id="tab-tasks" class="tab-pane"><div class="card"><h2>📝 Tâches Personnelles</h2></div></section>
-        <section id="tab-themes" class="tab-pane"><div class="card"><h2>🎨 Thèmes</h2></div></section>
-        <section id="tab-config" class="tab-pane"><div class="card"><h2>⚙️ Configuration</h2></div></section>
-
-    </main>
-
-    <!-- MODAL BANQUE ACTIVITÉS -->
-    <div id="modal-activity-bank" class="modal hidden">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeActivityBankModal()">&times;</span>
-            <h2>⭐ Banque d'Activités</h2>
-            <form id="form-create-saved-activity" style="margin-top:15px;">
-                <div class="input-group">
-                    <label>Nom de l'activité :</label>
-                    <input type="text" id="new-act-name" required placeholder="ex: Cours Université, Peinture...">
-                </div>
-                <input type="hidden" id="new-act-color" value="#FDE2E4">
-                <button type="submit" class="btn-primary" style="margin-top:15px;">➕ Ajouter</button>
-            </form>
-            <div id="bank-activities-list" style="margin-top:20px; max-height:200px; overflow-y:auto;"></div>
+    card.innerHTML = `
+      <div class="module-header" onclick="toggleModuleCollapse(${mod.id})">
+        <div class="module-title-wrapper">
+          <span class="toggle-icon">▼</span>
+          <span class="module-title" style="color: ${mod.color || '#ffffff'}">${mod.name}</span>
         </div>
+        <div class="module-actions" onclick="event.stopPropagation()">
+          <button class="btn btn-secondary btn-small" onclick="moveModule(${index}, -1, event)">▲</button>
+          <button class="btn btn-secondary btn-small" onclick="moveModule(${index}, 1, event)">▼</button>
+          <button class="btn btn-danger btn-small" onclick="deleteModule(${mod.id})">✕</button>
+        </div>
+      </div>
+      
+      <div class="module-body">
+        <div class="module-info">
+          🧪 TP : ${mod.tpCount || 0} | 📝 TD : ${mod.tdCount || 0} | 📚 Chapitres : ${(mod.chapters || []).length}
+        </div>
+
+        <button class="btn btn-small full-width" style="margin-bottom: 10px;" onclick="addChapter(${mod.id})">+ Ajouter un chapitre</button>
+        
+        <div class="chapter-container">${chaptersHTML}</div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+// --- STATISTIQUES GLOBALES ---
+function updateGlobalStats() {
+  const modCountEl = document.getElementById('stat-modules-count');
+  const tpCountEl = document.getElementById('stat-tp-count');
+  const tdCountEl = document.getElementById('stat-td-count');
+  const progEl = document.getElementById('stat-progression');
+
+  if (!modCountEl) return;
+
+  modCountEl.innerText = (appData.modules || []).length;
+
+  let totalTP = 0, totalTD = 0, totalSteps = 0, completedSteps = 0;
+
+  (appData.modules || []).forEach(m => {
+    totalTP += m.tpCount || 0;
+    totalTD += m.tdCount || 0;
+    (m.chapters || []).forEach(c => {
+      (c.steps || []).forEach(s => {
+        totalSteps++;
+        if (s.done) completedSteps++;
+      });
+    });
+  });
+
+  if (tpCountEl) tpCountEl.innerText = totalTP;
+  if (tdCountEl) tdCountEl.innerText = totalTD;
+
+  const progressPct = totalSteps > 0 ? Math.round((completedSteps / totalSteps) * 100) : 0;
+  if (progEl) progEl.innerText = `${progressPct}%`;
+}
+
+// --- RECOMMANDATEUR ANTI-MOOD ---
+function generateRecommendation() {
+  const time = parseInt(document.getElementById('mood-time')?.value) || 30;
+  const fatigue = parseInt(document.getElementById('mood-fatigue')?.value) || 1;
+  const mood = document.getElementById('mood-state')?.value || 'neutral';
+  const output = document.getElementById('recommendation-output');
+
+  if (!output) return;
+
+  if (!appData.modules || appData.modules.length === 0) {
+    output.style.display = 'block';
+    output.innerHTML = '<strong>Remarque :</strong> Ajoutez au moins un module pour recevoir une recommandation.';
+    return;
+  }
+
+  const randomMod = appData.modules[Math.floor(Math.random() * appData.modules.length)];
+  let advice = "";
+
+  if (fatigue >= 4 || mood === 'demotivated') {
+    advice = `💡 <strong>Stratégie Basse Énergie (${time} min)</strong> :<br>Ne forcez pas sur la théorie lourde. Prenez le module <strong>${randomMod.name}</strong> et réalisez l'<strong>Étape 1 (Écouter / noter l'audio)</strong> ou révisez un exercice de TD simple.`;
+  } else if (fatigue === 3 || mood === 'distracted') {
+    advice = `⚡ <strong>Stratégie Focus Modéré (${time} min)</strong> :<br>Lancez une session Pomodoro de 20-25 min sur <strong>${randomMod.name}</strong>. Effectuez l'<strong>Étape 3 (Faire un résumé)</strong> d'un chapitre.`;
+  } else {
+    advice = `🚀 <strong>Stratégie Haute Énergie (${time} min)</strong> :<br>Profitez de votre état ! Attaquez l'<strong>Étape 2 (Comprendre le reste)</strong> ou travaillez vos TP sur le module <strong>${randomMod.name}</strong>.`;
+  }
+
+  output.style.display = 'block';
+  output.innerHTML = advice;
+}
+
+// --- PLANNING UNIVERSITAIRE ---
+function addPlanningItem() {
+  const titleInput = document.getElementById('plan-title');
+  const dateInput = document.getElementById('plan-date');
+  const title = titleInput ? titleInput.value.trim() : '';
+  const date = dateInput ? dateInput.value : '';
+
+  if (!title || !date) return alert('Veuillez remplir le titre et la date.');
+
+  if (!appData.planning) appData.planning = [];
+  appData.planning.push({ id: Date.now(), title, date });
+  saveData();
+  renderPlanning();
+  if (titleInput) titleInput.value = '';
+}
+
+function deletePlanningItem(id) {
+  appData.planning = (appData.planning || []).filter(p => p.id !== id);
+  saveData();
+  renderPlanning();
+}
+
+function renderPlanning() {
+  const container = document.getElementById('planning-list');
+  if (!container) return;
+
+  if (!appData.planning || appData.planning.length === 0) {
+    container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">Aucun événement planifié.</p>';
+    return;
+  }
+
+  container.innerHTML = appData.planning.map(item => `
+    <div class="planning-item">
+      <div>
+        <div style="font-weight: 600;">${item.title}</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">${new Date(item.date).toLocaleString('fr-FR')}</div>
+      </div>
+      <button class="btn btn-danger btn-small" onclick="deletePlanningItem(${item.id})">✕</button>
     </div>
+  `).join('');
+}
 
-    <!-- MODAL AJOUT HORAIRE -->
-    <div id="modal-add-slot" class="modal hidden">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeAddSlotModal()">&times;</span>
-            <h2>⏰ Créer un Créneau Horaire</h2>
-            <form id="form-add-slot" style="margin-top:15px;">
-                <div class="form-row">
-                    <div class="input-group">
-                        <label>Début :</label>
-                        <input type="text" id="slot-start" placeholder="08:00" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Fin :</label>
-                        <input type="text" id="slot-end" placeholder="09:30" required>
-                    </div>
-                </div>
-                <button type="submit" class="btn-primary" style="margin-top:15px;">Ajouter Horaire</button>
-            </form>
-        </div>
-    </div>
+// --- MINUTEUR POMODORO ---
+let timerInterval = null;
+let timeLeft = 25 * 60;
+let isRunning = false;
 
-    <script>
-        let appData = {
-            timeSlots: [
-                { id: 1, start: "08:00", end: "09:30" },
-                { id: 2, start: "09:30", end: "11:00" },
-                { id: 3, start: "11:00", end: "12:30" },
-                { id: 4, start: "14:00", end: "15:30" }
-            ],
-            savedActivities: [
-                { id: 1, title: "Cours Université", color: "#E2D4F9" },
-                { id: 2, title: "Séance Gym", color: "#D1F2D9" }
-            ],
-            timetable: {}
-        };
+function updatePomodoroDropdown() {
+  const select = document.getElementById('pomo-module-select');
+  if (!select) return;
+  select.innerHTML = (appData.modules || []).map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+}
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initNavigation();
-            renderSavedActivitiesDropdown();
-            renderTimetableGrid();
-            
-            document.getElementById('form-add-slot').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const start = document.getElementById('slot-start').value.trim();
-                const end = document.getElementById('slot-end').value.trim();
-                appData.timeSlots.push({ id: Date.now(), start, end });
-                renderTimetableGrid();
-                closeAddSlotModal();
-            });
+function startTimer() {
+  if (isRunning) return;
+  isRunning = true;
+  const startBtn = document.getElementById('pomo-start-btn');
+  if (startBtn) startBtn.innerText = 'En cours...';
 
-            document.getElementById('form-create-saved-activity').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const title = document.getElementById('new-act-name').value.trim();
-                appData.savedActivities.push({ id: Date.now(), title, color: "#FDE2E4" });
-                renderSavedActivitiesDropdown();
-                renderSavedActivitiesList();
-                document.getElementById('form-create-saved-activity').reset();
-            });
-        });
+  timerInterval = setInterval(() => {
+    if (timeLeft > 0) {
+      timeLeft--;
+      updateTimerDisplay();
+    } else {
+      clearInterval(timerInterval);
+      isRunning = false;
+      if (startBtn) startBtn.innerText = 'Démarrer';
+      alert('Session Pomodoro terminée ! Prenez une pause.');
+    }
+  }, 1000);
+}
 
-        function initNavigation() {
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                    document.querySelectorAll('.tab-pane').forEach(tab => tab.classList.remove('active'));
-                    btn.classList.add('active');
-                    document.getElementById(btn.dataset.tab).classList.add('active');
-                });
-            });
+function pauseTimer() {
+  clearInterval(timerInterval);
+  isRunning = false;
+  const startBtn = document.getElementById('pomo-start-btn');
+  if (startBtn) startBtn.innerText = 'Démarrer';
+}
+
+function resetTimer() {
+  pauseTimer();
+  const workDur = parseInt(document.getElementById('pomo-work')?.value) || 25;
+  timeLeft = workDur * 60;
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+  const display = document.getElementById('timer-display');
+  if (!display) return;
+  const mins = Math.floor(timeLeft / 60);
+  const secs = timeLeft % 60;
+  display.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+// --- CONFIGURATION : EXPORT & IMPORT LOCAL JSON ---
+function exportJSON() {
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+  const downloadAnchor = document.createElement('a');
+  downloadAnchor.setAttribute("href", dataStr);
+  downloadAnchor.setAttribute("download", `study_app_backup_${new Date().toISOString().slice(0,10)}.json`);
+  document.body.appendChild(downloadAnchor);
+  downloadAnchor.click();
+  downloadAnchor.remove();
+}
+
+function importJSON() {
+  const fileInput = document.getElementById('import-file');
+  if (!fileInput || !fileInput.files.length) return alert('Veuillez sélectionner un fichier JSON.');
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const importedData = JSON.parse(e.target.result);
+      appData = {
+        modules: importedData.modules || [],
+        planning: importedData.planning || [],
+        timeSlots: importedData.timeSlots || [],
+        savedActivities: importedData.savedActivities || [],
+        timetable: importedData.timetable || {}
+      };
+      saveData();
+      renderModules();
+      renderPlanning();
+      alert('Données importées avec succès !');
+    } catch (err) {
+      alert('Erreur lors de la lecture du fichier JSON.');
+    }
+  };
+  reader.readAsText(fileInput.files[0]);
+}
+
+// --- CONFIGURATION : SYNCHRO GITHUB GIST ---
+function saveSyncCredentials() {
+  const token = document.getElementById('github-token')?.value.trim() || '';
+  const gistId = document.getElementById('github-gist-id')?.value.trim() || '';
+
+  localStorage.setItem('study_gh_token', token);
+  localStorage.setItem('study_gh_gist_id', gistId);
+  alert('Identifiants GitHub enregistrés.');
+}
+
+function loadSyncCredentials() {
+  const tokenInput = document.getElementById('github-token');
+  const gistInput = document.getElementById('github-gist-id');
+  if (tokenInput) tokenInput.value = localStorage.getItem('study_gh_token') || '';
+  if (gistInput) gistInput.value = localStorage.getItem('study_gh_gist_id') || '';
+}
+
+async function pushToGist() {
+  const token = localStorage.getItem('study_gh_token');
+  const gistId = localStorage.getItem('study_gh_gist_id');
+  const statusEl = document.getElementById('sync-status');
+
+  if (!token || !gistId) return alert('Veuillez d\'abord enregistrer votre Jeton et Gist ID.');
+
+  if (statusEl) statusEl.innerText = "Envoi des données en cours...";
+  try {
+    const res = await fetch(`https://api.github.com/gists/${gistId}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        files: {
+          "study_data.json": { content: JSON.stringify(appData, null, 2) }
         }
+      })
+    });
 
-        function renderSavedActivitiesDropdown() {
-            const sel = document.getElementById('assign-saved-activity');
-            if (!sel) return;
-            sel.innerHTML = '';
-            appData.savedActivities.forEach(act => {
-                const opt = document.createElement('option');
-                opt.value = act.id;
-                opt.textContent = act.title;
-                sel.appendChild(opt);
-            });
-        }
+    if (res.ok) {
+      if (statusEl) statusEl.innerText = "✅ Données envoyées au Cloud avec succès !";
+    } else {
+      if (statusEl) statusEl.innerText = "❌ Erreur lors de l'envoi vers GitHub.";
+    }
+  } catch (e) {
+    if (statusEl) statusEl.innerText = "❌ Erreur de connexion réseau.";
+  }
+}
 
-        function renderSavedActivitiesList() {
-            const list = document.getElementById('bank-activities-list');
-            if (!list) return;
-            list.innerHTML = '';
-            appData.savedActivities.forEach(act => {
-                const div = document.createElement('div');
-                div.style.padding = '8px'; div.style.marginBottom = '6px'; div.style.borderRadius = '8px';
-                div.style.backgroundColor = act.color; div.style.fontWeight = 'bold';
-                div.textContent = act.title;
-                list.appendChild(div);
-            });
-        }
+async function pullFromGist() {
+  const token = localStorage.getItem('study_gh_token');
+  const gistId = localStorage.getItem('study_gh_gist_id');
+  const statusEl = document.getElementById('sync-status');
 
-        function renderTimetableGrid() {
-            const tbody = document.getElementById('timetable-body');
-            const slotSelect = document.getElementById('assign-slot');
-            if (!tbody || !slotSelect) return;
+  if (!token || !gistId) return alert('Veuillez d\'abord enregistrer votre Jeton et Gist ID.');
 
-            tbody.innerHTML = '';
-            slotSelect.innerHTML = '';
+  if (statusEl) statusEl.innerText = "Récupération des données...";
+  try {
+    const res = await fetch(`https://api.github.com/gists/${gistId}`, {
+      headers: { 'Authorization': `token ${token}` }
+    });
 
-            const days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+    if (res.ok) {
+      const data = await res.json();
+      const content = data.files["study_data.json"]?.content || "{}";
+      const importedData = JSON.parse(content);
+      
+      appData = {
+        modules: importedData.modules || [],
+        planning: importedData.planning || [],
+        timeSlots: importedData.timeSlots || [],
+        savedActivities: importedData.savedActivities || [],
+        timetable: importedData.timetable || {}
+      };
+      
+      saveData();
+      renderModules();
+      renderPlanning();
+      if (statusEl) statusEl.innerText = "✅ Données synchronisées depuis le Cloud !";
+    } else {
+      if (statusEl) statusEl.innerText = "❌ Erreur lors de la récupération.";
+    }
+  } catch (e) {
+    if (statusEl) statusEl.innerText = "❌ Erreur réseau.";
+  }
+}
 
-            appData.timeSlots.forEach(slot => {
-                const opt = document.createElement('option');
-                opt.value = slot.id;
-                opt.textContent = `${slot.start} - ${slot.end}`;
-                slotSelect.appendChild(opt);
-
-                const tr = document.createElement('tr');
-                const tdTime = document.createElement('td');
-                tdTime.className = 'time-slot-label';
-                tdTime.textContent = `${slot.start} - ${slot.end}`;
-                tr.appendChild(tdTime);
-
-                days.forEach(day => {
-                    const tdCell = document.createElement('td');
-                    tdCell.className = 'cell-slot';
-                    const key = `${day}-${slot.id}`;
-                    const taskData = appData.timetable[key];
-
-                    if (taskData) {
-                        tdCell.innerHTML = `<span class="slot-badge" style="background-color:${taskData.color}">${taskData.title}</span>`;
-                    }
-                    tdCell.onclick = () => assignFromCellClick(day, slot.id);
-                    tr.appendChild(tdCell);
-                });
-
-                const tdAction = document.createElement('td');
-                tdAction.innerHTML = `<button class="btn-danger btn-sm" onclick="deleteTimeSlot(${slot.id})">❌</button>`;
-                tr.appendChild(tdAction);
-
-                tbody.appendChild(tr);
-            });
-        }
-
-        function assignFromCellClick(day, slotId) {
-            const actId = document.getElementById('assign-saved-activity').value;
-            const act = appData.savedActivities.find(a => a.id == actId) || appData.savedActivities[0];
-            if (act) {
-                appData.timetable[`${day}-${slotId}`] = { title: act.title, color: act.color };
-                renderTimetableGrid();
-            }
-        }
-
-        function assignTaskFromBar() {
-            const actId = document.getElementById('assign-saved-activity').value;
-            const day = document.getElementById('assign-day').value;
-            const slotId = document.getElementById('assign-slot').value;
-            const act = appData.savedActivities.find(a => a.id == actId);
-            if (act) {
-                appData.timetable[`${day}-${slotId}`] = { title: act.title, color: act.color };
-                renderTimetableGrid();
-            }
-        }
-
-        function clearSelectedSlotFromBar() {
-            const day = document.getElementById('assign-day').value;
-            const slotId = document.getElementById('assign-slot').value;
-            delete appData.timetable[`${day}-${slotId}`];
-            renderTimetableGrid();
-        }
-
-        function deleteTimeSlot(slotId) {
-            appData.timeSlots = appData.timeSlots.filter(s => s.id !== slotId);
-            renderTimetableGrid();
-        }
-
-        function openActivityBankModal() { renderSavedActivitiesList(); document.getElementById('modal-activity-bank').classList.remove('hidden'); }
-        function closeActivityBankModal() { document.getElementById('modal-activity-bank').classList.add('hidden'); }
-        function openAddSlotModal() { document.getElementById('modal-add-slot').classList.remove('hidden'); }
-        function closeAddSlotModal() { document.getElementById('modal-add-slot').classList.add('hidden'); }
-    </script>
-</body>
-</html>
+// --- INITIALISATION AUTOMATIQUE ---
+document.addEventListener('DOMContentLoaded', () => {
+  initPastelPalette();
+  renderModules();
+  renderPlanning();
+  updateGlobalStats();
+});
