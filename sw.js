@@ -1,4 +1,4 @@
-const CACHE_NAME = 'focus-study-v2';
+const CACHE_NAME = 'study-app-cache-v2';
 const ASSETS = [
     './',
     './index.html',
